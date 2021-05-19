@@ -1,0 +1,1 @@
+xbacklight  -getf | sed -r 's/\.w+$/%/' | grep -o '[0-9]*'

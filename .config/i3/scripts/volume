@@ -1,0 +1,24 @@
+#!/bin/sh
+
+
+
+
+
+CARD="${1:-1}"
+MIXER="${2:-pulse}" # use pulse for pulseaudio, default is alsa
+
+case $BLOCK_BUTTON in
+  2) amixer -q sset Master toggle ;; # middle click
+  4) amixer -q sset Master 10%+ ;;   # scroll up
+  5) amixer -q sset Master 10%- ;;   # scroll down
+esac
+
+volume () {
+  amixer -c $CARD -M -D 
+}
+
+format () {
+  ruby -ne '$_ =~ /\[(\d+)%\] \[(on|off)\]/ and (puts $2 == "off" ? "MUTE" : "#$1%"; exit)'
+}
+
+volume | format
