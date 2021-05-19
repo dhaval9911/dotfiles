@@ -1,5 +1,4 @@
 -- IMPORTS
-import Graphics.X11.ExtraTypes.XF86
 
   -- Base
 import XMonad
@@ -69,6 +68,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
 import XMonad.Layout.IndependentScreens
+import Graphics.X11.ExtraTypes.XF86
 
 
 -- terminal variable
@@ -84,24 +84,21 @@ myBorderWidth   = 2
 -- MODEKEY
 myModMask       = mod4Mask
 
-
+-- windowCount
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 
-
+-- My Workspaces
 myWorkspaces    =  ["1","2","3","4","5","6","7","8","9"] 
 -- myWorkspaces = [" dev ", " www ", " sys ", " doc ", " vbox ", " chat ", " mus ", " vid ", " gfx "]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
-
+-- fonts 
 myFont :: String
 myFont = "xft:SauceCodePro Nerd Font Mono:bold:size=10:antialias=true:hinting=true"
 
-
-
 -- Border colors for unfocused and focused windows, respectively.
---
 myNormalBorderColor  = "#343536"
 myFocusedBorderColor = "#0565ff"
 
@@ -111,11 +108,11 @@ myAddKeys :: [(String, X ())]
 myAddKeys =
     -- Xmonad
         [ 
-         ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle" )
-        ,("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-       , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
-       , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10")
-       , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10")
+         ("<XF86AudioMute>",         spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle" )
+        ,("<XF86AudioLowerVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
+        ,("<XF86AudioRaiseVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+        ,("<XF86MonBrightnessUp>",   spawn "xbacklight -inc 10")
+        ,("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10")
 
     -- Increase/decrease spacing (gaps)
         , ("C-M1-j", decWindowSpacing 4)         -- Decrease window spacing
