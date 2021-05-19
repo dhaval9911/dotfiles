@@ -359,16 +359,16 @@ myKeys =
     -- Toggle show/hide these programs.  They run on a hidden workspace.
     -- When you toggle them to show, it brings them to your current workspace.
     -- Toggle them to hide and it sends them back to hidden workspace (NSP).
-        , ("C-s t", namedScratchpadAction myScratchPads "xfce4-terminal")
-        , ("C-s m", namedScratchpadAction myScratchPads "mocp")
-        , ("C-s c", namedScratchpadAction myScratchPads "calculator")
+  --      , ("C-s t", namedScratchpadAction myScratchPads "xfce4-terminal")
+  --      , ("C-s m", namedScratchpadAction myScratchPads "mocp")
+  --      --, ("C-s c", namedScratchpadAction myScratchPads "calculator")
 
 
 -- The following lines are needed for named scratchpads.
-          where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
-                nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
+--          where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
+  --              nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
 
-main :: IO ()
+-- emain :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
     xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
@@ -386,7 +386,7 @@ main = do
         , terminal           = myTerminal
         , startupHook        = myStartupHook
         , layoutHook         = showWName' myShowWNameTheme $ myLayoutHook
-        , workspaces         = myWorkspaces
+      --  , workspaces         = withScreens 2 ["1","2","3","4","5","6","7","8","9"],
         , borderWidth        = myBorderWidth
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
