@@ -161,11 +161,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Push window back into tiling
     , ((modm  .|. shiftMask,   xK_space     ), withFocused $ windows . W.sink)
     -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm , xK_comma ), sendMessage (IncMasterN 1))
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm  , xK_period), sendMessage (IncMasterN (-1)))
     -- Toggle the status bar gap
-    , ((modm   , xK_b), sendMessage(MT.Toggle NBFULL) >> sendMessage ToggleStruts)
+    , ((modm, xK_b), sendMessage(MT.Toggle NBFULL) >> sendMessage ToggleStruts)
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q), io exitSuccess)
     -- focus next monitor
@@ -175,7 +175,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_n), nextWS)
     , ((modm, xK_m), prevWS)
     
-    -- shift window to next monitor
     -- Restart xmonad
     , ((modm  .|. shiftMask, xK_p), spawn "xmonad --recompile &&  xmonad --restart")
     ]
@@ -184,7 +183,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       [ ((m .|. modm, k), windows $ onCurrentScreen f i)
         | (i ,k) <- zip (workspaces' conf) [xK_1 .. xK_9]
         , (f , m) <- [(W.view, 0), (W.shift, shiftMask)]]
-  --  ++
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -201,27 +199,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
 ------------------------------------------------------------------------
--- Laf684ffyouts:
-
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- * NOTE: XMonad.Hooks.EwmhDesktops users must remove the obsolete
--- ewmhDesktopsLayout modifier from layoutHook. It no longer exists.
--- Instead use the 'ewmh' function from that module to modify your
--- defaultConfig as a whole. (See also logHook, handleEventHook, and
--- startupHook ewmh notes.)
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
 
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
@@ -232,6 +212,8 @@ mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 mySpacing' :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
 mySpacing' i = spacingRaw True (Border i i i i) True (Border i i i i) True
 
+
+-- MY LAYOUTS
 
 -- mySpacing n sets the gap size around the windows.
 tall     = renamed [Replace "tall"]
@@ -315,6 +297,8 @@ myShowWNameTheme = def
     , swn_color             = "#ffffff"
     }
 
+
+-- The layoutHook
 myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
@@ -332,18 +316,6 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
 --------------------------------------------------------------------------
 -- Window rules:
 
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
 myManageHook = composeAll $ 
     [ className =? "Polybar"        --> doFloat
     , className =? "Gimp"           --> doFloat
@@ -351,17 +323,14 @@ myManageHook = composeAll $
     , resource  =? "kdesktop"       --> doIgnore ] 
 
 ------------------------------------------------------------------------
---
 myEventHook = mempty
 
-
-
+------------------------------------------------------------------------
 
 myLogHook :: X ()
 myLogHook = return ()
 ------------------------------------------------------------------------
 
---
 myStartupHook = do
             spawnOnce  "nitrogen --restore &"
             spawnOnce  "picom &"
@@ -370,18 +339,17 @@ myStartupHook = do
 
 main = do 
         nScreens <- countScreens
-        xmproc0 <- spawnPipe "xmobar -x 0 /home/lucifer/.config/xmobar/xmobarrc0 -A 200"
-        xmproc1 <- spawnPipe "xmobar -x 1 /home/lucifer/.config/xmobar/xmobarrc1 -A 200"
+        xmproc0 <- spawnPipe "xmobar -x 0 /home/lucifer/.config/xmobar/xmobarrc0 -A 200" -- xmobar screen 0
+        xmproc1 <- spawnPipe "xmobar -x 1 /home/lucifer/.config/xmobar/xmobarrc1 -A 200" -- xmobar screen 1
         xmonad $ ewmh $ docks def {
-        
-         workspaces = withScreens 2 ["1","2","3","4","5","6","7","8","9"],
+
+        workspaces = withScreens 2 ["1","2","3","4","5","6","7","8","9"],  -- workspaces independent way 
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myClickJustFocuses,
         clickJustFocuses   = myClickJustFocuses,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-      --  workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
       -- key bindings
@@ -399,5 +367,5 @@ main = do
                          , ppExtras  = [windowCount]                               -- # of windows current workspace
                          , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]              -- order of things in xmobar
                         },
-        startupHook        = myStartupHook
-    } `additionalKeysP` myAddKeys
+                           startupHook        = myStartupHook
+                        } `additionalKeysP` myAddKeys
