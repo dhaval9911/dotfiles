@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/lucifer/.xmonad'
+let g:netrw_dirhist_6='/home/lucifer'
+let g:netrw_dirhist_5='/home/lucifer/.screenlayout'
+let g:netrw_dirhist_4='/home/lucifer/.config/i3'
+let g:netrw_dirhist_3='/home/lucifer/.config/i3/i3blocks'
+let g:netrw_dirhist_2='/home/lucifer/.config/i3/i3blocks/scripts'
+let g:netrw_dirhist_1='/home/lucifer/.config/i3/i3blocks'
