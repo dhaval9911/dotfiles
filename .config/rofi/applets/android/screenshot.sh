@@ -31,9 +31,9 @@ case $chosen in
 		fi
         ;;
     $area)
-		if [[ -f /usr/bin/scrot ]]; then
-			scrot -s 'Screenshot_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; viewnior $$(xdg-user-dir PICTURES)/$f'
-		else
+		if [[ -f /usr/bin/flameshot ]]; then
+            flameshot gui 	
+        else
 			msg
 		fi
         ;;

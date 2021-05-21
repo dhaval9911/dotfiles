@@ -33,7 +33,7 @@ set relativenumber
 set number
 set scrolloff=10
 set autoindent
-"set wrap
+set nowrap
 set tabstop=4
 set shiftwidth=4
 set breakindent

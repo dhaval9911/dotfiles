@@ -27,21 +27,7 @@ options="$terminal\n$files\n$editor\n$browser\n$music\n$settings"
 chosen="$(echo -e "$options" | $rofi_command -p "Most Used" -dmenu -selected-row 0)"
 case $chosen in
     $terminal)
-		if [[ -f /usr/bin/termite ]]; then
-			termite &
-		elif [[ -f /usr/bin/urxvt ]]; then
-			urxvt &
-		elif [[ -f /usr/bin/kitty ]]; then
-			kitty &
-		elif [[ -f /usr/bin/xterm ]]; then
-			xterm &
-		elif [[ -f /usr/bin/xfce4-terminal ]]; then
 			xfce4-terminal &
-		elif [[ -f /usr/bin/gnome-terminal ]]; then
-			gnome-terminal &
-		else
-			msg "No suitable terminal found!"
-		fi
         ;;
     $files)
 		if [[ -f /usr/bin/thunar ]]; then
