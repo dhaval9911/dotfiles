@@ -16,18 +16,18 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=t
        , persistent = True
        , iconRoot = "/home/lucifer/.xmonad/xpm/"  -- default: "."
        , commands = [
-                      Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M) " "date" 50
+                      Run Date "<fn=2>\xf017</fn>  %b %d %Y |  %I:%M " "date" 50
                     , Run Network "wlp6s0" ["-t", "<fn=2>\xf0ab</fn>  <rx>kb  <fn=2>\xf0aa</fn>  <tx>kb"] 20
                     --, Run Battery [ "-t", "<left>%", "-L", "50", "-H"< "75", "-h","green", "-n", "yell","-l","red"] "Battery"  10
                     , Run Cpu ["-t", "<fn=2>\xf108</fn>  cpu: (<total>%)","-H","50","--high","red"]  20
                     , Run Memory ["-t", "<fn=2>\xf233</fn>  mem: <used>M (<usedratio>%)"] 20
                     , Run DiskU [("/", "<fn=2>\xf0c7</fn>  hdd: <free> free")] [] 60
                     , Run Com "/home/lucifer/.config/i3/scripts/battery" [] "battery" 20 
-                    , Run Com "uname" ["-r"] "" 3600
+               --     , Run Com "uname" ["-r"] "" 3600
                     , Run Com "/home/lucifer/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                     , Run UnsafeStdinReader
                  ]
        , sepChar = "%" 
        , alignSep = "}{"
-      template = "<action='/home/lucifer/.config/rofi_themes/launcher/launcher.sh'> <icon=haskell_20.xpm/> </action> <fc=#666666>|</fc> %UnsafeStdinReader% }{  <fc=#666666>|</fc>  <fc=#b3afc2><fn=3></fn>  <action=`/home/lucifer/.config/rofi/applets/android/powermenu.sh`>%uname%</action> </fc> <fc=#666666>|</fc>  <fc=#ecbe7b> <action=`/home/lucifer/.config/rofi/applets/android/screenshot.sh`>%cpu%</action> </fc> <fc=#666666>|</fc>  <fc=#ff6c6b> <action=`xfce4-terminal -e htop`>%memory%</action> </fc> <fc=#666666>|</fc>  <fc=#51afef> <action=`thunar`>%disku%</action> </fc> <fc=#666666>|</fc>  <fc=#98be65> <action=`/home/lucifer/.config/rofi/applets/applets/network.sh`>%wlp6s0%</action> </fc> <fc=#666666>|</fc><action=`/home/lucifer/.config/rofi/applets/applets/battery.sh`>%battery%</action> <fc=#666666>|</fc>  <fc=#46d9ff><action=`/home/lucifer/.config/rofi/applets/applets/time.sh`> %date%</action></fc> <fc=#666666> |</fc>%trayerpad%"
+      template = "<action='/home/lucifer/.config/rofi_themes/launcher/launcher.sh'> <icon=haskell_20.xpm/> </action> <fc=#666666>|</fc> %UnsafeStdinReader% }{  <fc=#666666>|</fc>  <fc=#ecbe7b> <action=`/home/lucifer/.config/rofi/applets/android/screenshot.sh`>%cpu%</action> </fc> <fc=#666666>|</fc>  <fc=#ff6c6b> <action=`xfce4-terminal -e htop`>%memory%</action> </fc> <fc=#666666>|</fc>  <fc=#51afef> <action=`thunar`>%disku%</action> </fc> <fc=#666666>|</fc>  <fc=#98be65> <action=`/home/lucifer/.config/rofi/applets/applets/network.sh`>%wlp6s0%</action> </fc> <fc=#666666>|</fc><action=`/home/lucifer/.config/rofi/applets/applets/battery.sh`>%battery%</action> <fc=#666666>|</fc>  <fc=#46d9ff><action=`/home/lucifer/.config/rofi/applets/applets/time.sh`> %date%</action></fc> <fc=#666666> |</fc>%trayerpad%"
        }
