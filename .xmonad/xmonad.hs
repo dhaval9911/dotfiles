@@ -27,7 +27,8 @@ import qualified Data.Map as M
     -- Hooks
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
-import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
+import XMonad.Hooks.ManageDocks 
+import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..), SetStruts)
 import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
@@ -111,7 +112,8 @@ myStartupHook = do
     spawnOnce "nm-applet &"
     spawnOnce "volumeicon &"
     spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
-    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
+    spawnOnce "conky -c /home/lucifer/.config/conky/Rock/.conkyrc2"
+    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0  --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
     spawnOnce "/usr/bin/emacs --daemon &" -- emacs daemon for the emacsclient
     -- spawnOnce "kak -d -s mysession &"  -- kakoune daemon for better performance
     -- spawnOnce "urxvtd -q -o -f &"      -- urxvt daemon for better performance
@@ -290,16 +292,15 @@ myShowWNameTheme = def
     , swn_bgcolor           = "#1c1f24"
     , swn_color             = "#ffffff"
     }
-
 -- The layout hook
 myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats
-               $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
+                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
                myDefaultLayout =     withBorder myBorderWidth tall
+                                 ||| noBorders tabs
                                  ||| magnify
                                  ||| noBorders monocle
                                  ||| floats
-                                 ||| noBorders tabs
                                  ||| grid
                                  ||| spirals
                                  ||| threeCol
@@ -330,7 +331,6 @@ myManageHook = composeAll
      , className =? "pinentry-gtk-2"  --> doFloat
      , className =? "splash"          --> doFloat
      , className =? "toolbar"         --> doFloat
-     , title =? "Oracle VM VirtualBox Manager"  --> doFloat
      , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
      , className =? "brave-browser"   --> doShift ( myWorkspaces !! 1 )
      , className =? "qutebrowser"     --> doShift ( myWorkspaces !! 1 )
@@ -346,7 +346,8 @@ myKeys =
     -- Xmonad
         [ ("M-S-p", spawn "xmonad --recompile && xmonad --restart")    -- Restarts xmonad
         , ("M-S-q", io exitSuccess)              -- Quits xmonad
-        , ("M-M1-l", spawn "systemctl suspend")
+        , ("M-M1-n", spawn "thunar")
+        , ("M-M1-l", spawn "betterlockscreen -s blur")
         , ("M-M1-s", spawn "flameshot gui")
 
     -- Run Prompt
@@ -418,6 +419,7 @@ myKeys =
         , ("M-<Tab>", sendMessage NextLayout)           -- Switch to next layout
         , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
         , ("M-b", sendMessage ToggleStruts)
+        , ("M-S-b", sendMessage $  SetStruts [U,L] [minBound .. maxBound])
         , ("M-M1-g",  sendMessage (MT.Toggle NOBORDERS ))
 
     -- Increase/decrease windows in the master pane or the stack
@@ -438,7 +440,7 @@ myKeys =
         , ("M-C-l", sendMessage $ pullGroup R)
         , ("M-C-k", sendMessage $ pullGroup U)
         , ("M-C-j", sendMessage $ pullGroup D)
-        , ("M-C-m", withFocused (sendMessage . MergeAll))
+        , ("M-w", withFocused (sendMessage . MergeAll))
         -- , ("M-C-u", withFocused (sendMessage . UnMerge))
         , ("M-C-/", withFocused (sendMessage . UnMergeAll))
         , ("M-C-.", onGroup W.focusUp')    -- Switch focus to next tab
@@ -504,11 +506,10 @@ main = do
     -- Launching three instances of xmobar on their monitors.
     xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
     xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
-    xmproc2 <- spawnPipe "xmobar -x 2 $HOME/.config/xmobar/xmobarrc2"
     -- the xmonad, ya know...what the WM is named after!
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
-        , handleEventHook    = docksEventHook
+        , handleEventHook    = docksEventHook  
                                -- Uncomment this line to enable fullscreen support on things like YouTube/Netflix.
                                -- This works perfect on SINGLE monitor systems. On multi-monitor systems,
                                -- it adds a border around the window if screen does not have focus. So, my solution

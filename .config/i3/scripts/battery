@@ -70,8 +70,8 @@ if ($acpi =~ /(\d\d:\d\d):/) {
 }
 
 # print text
-print "Bat: $full_text\n";
-print "Bat: $short_text\n";
+print " Bat: $full_text\n";
+print " Bat: $short_text\n";
 
 # consider color and urgent flag only on discharge
 if ($status eq 'Discharging') {
