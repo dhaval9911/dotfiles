@@ -9,7 +9,6 @@
 "---------------PLUGINS------------------
 call plug#begin('~/.vim/plugged')
    Plug 'szw/vim-maximizer'
-   Plug 'sbdchd/neoformat'
    Plug 'pixelastic/vim-undodir-tree'
    Plug 'Xuyuanp/nerdtree-git-plugin'
 ""   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -27,7 +26,6 @@ call plug#begin('~/.vim/plugged')
    Plug 'jmcantrell/vim-virtualenv' 
   "Plug 'vim-airline/vim-airline'
   "Plug 'vim-airline/vim-airline-themes'
-   Plug 'ap/vim-css-color'
    Plug 'kassio/neoterm' 
   "Plug 'Valloric/YouCompleteMe'
    Plug 'preservim/nerdtree'

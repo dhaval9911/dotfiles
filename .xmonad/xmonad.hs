@@ -5,6 +5,9 @@ import System.IO (hPutStrLn)
 import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
 
+
+
+-- soemhtins
     -- Actions
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS (Direction1D(..), moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
@@ -107,14 +110,14 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 myStartupHook :: X ()
 myStartupHook = do
-    spawnOnce "lxsession &"
+   -- spawnOnce "lxsession &"
     spawnOnce "picom &"
     spawnOnce "nm-applet &"
     spawnOnce "volumeicon &"
     spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
-    spawnOnce "conky -c /home/lucifer/.config/conky/Rock/.conkyrc2"
-    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0  --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
-    spawnOnce "/usr/bin/emacs --daemon &" -- emacs daemon for the emacsclient
+    --spawnOnce "conky -c /home/lucifer/.config/conky/Rock/.conkyrc2"
+   -- spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0  --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
+    --spawnOnce "/usr/bin/emacs --daemon &" -- emacs daemon for the emacsclient
     -- spawnOnce "kak -d -s mysession &"  -- kakoune daemon for better performance
     -- spawnOnce "urxvtd -q -o -f &"      -- urxvt daemon for better performance
 
@@ -122,7 +125,7 @@ myStartupHook = do
     -- spawnOnce "/bin/ls ~/wallpapers | shuf -n 1 | xargs xwallpaper --stretch"  -- set random xwallpaper
     -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
     -- spawnOnce "feh --randomize --bg-fill ~/wallpapers/*"  -- feh set random wallpaper
-    spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
+   -- spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
     setWMName "LG3D"
 
 myColorizer :: Window -> Bool -> X (String, String)
@@ -487,9 +490,9 @@ myKeys =
         , ("<XF86AudioPlay>", spawn ("playerctl play-pause"))
         , ("<XF86AudioPrev>", spawn ("playerctl previous"))
         , ("<XF86AudioNext>", spawn ("playerctl next"))
-        , ("<XF86AudioMute>", spawn "amixer set Master toggle")
-        , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
-        , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
+        , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle && exec notify-send Mute -t 500")
+        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
         , ("<XF86HomePage>", spawn "qutebrowser https://www.youtube.com/c/DistroTube")
         , ("<XF86Search>", spawn "dmsearch")
         , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))

@@ -2,13 +2,10 @@
 "---------------PLUGINS------------------
 call plug#begin('~/.vim/plugged')
    Plug 'szw/vim-maximizer'
-   Plug 'xianzhon/vim-code-runner'
-   Plug 'sbdchd/neoformat'
    Plug 'Xuyuanp/nerdtree-git-plugin'
    Plug 'neoclide/coc.nvim', {'branch': 'release'}
    Plug 'neoclide/coc-snippets'
    Plug 'tomasiser/vim-code-dark'
- " Plug 'SirVer/ultisnips' 
    Plug 'Yggdroot/indentLine'
    Plug 'vim-scripts/indentpython'
    Plug 'tmhedberg/SimpylFold'
