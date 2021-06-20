@@ -19,6 +19,7 @@ call plug#begin('~/.vim/plugged')
    Plug 'vim-scripts/indentpython'
    Plug 'tmhedberg/SimpylFold'
    Plug 'morhetz/gruvbox'
+   Plug 'joshdick/onedark.vim'
    Plug 'ap/vim-css-color' 
    Plug 'danilo-augusto/vim-afterglow'
    Plug 'itchyny/lightline.vim'
@@ -95,7 +96,8 @@ let g:lightline = {
  ""   \ 'component_function': {
  ""   \   'gitbranch': 'gitbranch#name'
 set termguicolors
-colorscheme base-16-onedark  
+"let g:onedark_termcolors=256
+colorscheme onedark  
 hi Normal ctermbg=259
 "let airline_theme='fairyfloss' 
 "let g:airline_powerline_fonts = 1
