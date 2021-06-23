@@ -75,7 +75,8 @@ nnoremap <silent><leader>e   :w<cr>
 "leader + w to save and quit
 nnoremap <silent><leader>w   :wq<cr>
 
-
+"leader + u for underline whole line with dash
+nnoremap <leader>u YpVr
 
 " itchyny/lightline.vim and itchyny/vim-gitbranch
 let g:lightline = {
@@ -116,8 +117,7 @@ endif
 nnoremap <leader>m :MaximizerToggle!<CR>
 
 "NERDTREE SETTINGS
-nnoremap <leader>p :NERDTreeFocus<CR>
-nnoremap <S-p> :NERDTreeToggle<CR>
+nnoremap <leader>p :NERDTreeToggle<CR>
 nnoremap <S-f> :NERDTreeFind<CR>
 nnoremap  <C-n> :tabnew<CR>
 

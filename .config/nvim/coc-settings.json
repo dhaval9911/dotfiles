@@ -11,7 +11,7 @@
       }
   }
 },
-
+// be careful not to condense the hierarchy as it breaks pyls
 "languageserver": {
   "python": {
     "command": "python",
@@ -80,11 +80,6 @@
       }
     }
   }
-},
-
-
-"coc.preferences.extensionUpdateCheck": "daily"
-
-
-
 }
+}
+
