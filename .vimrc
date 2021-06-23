@@ -9,7 +9,6 @@
 "---------------PLUGINS------------------
 call plug#begin('~/.vim/plugged')
    Plug 'szw/vim-maximizer'
-   Plug 'pixelastic/vim-undodir-tree'
    Plug 'Xuyuanp/nerdtree-git-plugin'
 ""   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 ""   Plug 'neoclide/coc-snippets'
@@ -18,17 +17,11 @@ call plug#begin('~/.vim/plugged')
    Plug 'Yggdroot/indentLine'
    Plug 'vim-scripts/indentpython'
    Plug 'tmhedberg/SimpylFold'
-   Plug 'morhetz/gruvbox'
    Plug 'joshdick/onedark.vim'
    Plug 'ap/vim-css-color' 
-   Plug 'danilo-augusto/vim-afterglow'
    Plug 'itchyny/lightline.vim'
    Plug 'Raimondi/delimitMate'
    Plug 'jmcantrell/vim-virtualenv' 
-  "Plug 'vim-airline/vim-airline'
-  "Plug 'vim-airline/vim-airline-themes'
-   Plug 'kassio/neoterm' 
-  "Plug 'Valloric/YouCompleteMe'
    Plug 'preservim/nerdtree'
 call plug#end()
 
@@ -141,7 +134,7 @@ let NERDTreeDirArrows = 1
 
 
 "open current nerdtree in every new tab
-autocmd BufWinEnter * silent :NERDTreeMirror
+"autocmd BufWinEnter * silent :NERDTreeMirror
 
 
 "ctrl navigation for insert mode
@@ -153,18 +146,7 @@ inoremap <C-l> <Right>
 "insert mode go to end of line
 imap <C-e> <ESC>A
 imap <C-r> <ESC>0i
-" kassio/neoterm
-let g:neoterm_default_mod = 'vertical'
- let g:neoterm_size = 100
-let g:neoterm_autoinsert = 1
-let g:neoterm_autoscroll = 1
-let g:neoterm_term_per_tab = 1
-nnoremap <c-y> :Ttoggle<CR>
-inoremap <c-y> <Esc>:Ttoggle<CR>
-tnoremap <c-y> <c-\><c-n>:Ttoggle<CR>
 
-" sbdchd/neoformat
-nnoremap <leader>f :Neoformat prettier<CR>
 
 "Shift s to switch to next tab
 nnoremap <S-s> :tabnext<CR>
