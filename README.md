@@ -1,4 +1,3 @@
-# dotfiles
-my_arch_dotfiles
+# `$HOME sweet ~/`
 
 
