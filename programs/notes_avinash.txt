@@ -1,2 +1,10 @@
+
 notes
 -----
+
+
+slide 1 
+
+
+good evening everyone 
+today i ll be presenting about my project active directory and domain services 
