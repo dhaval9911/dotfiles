@@ -117,7 +117,7 @@ endif
 nnoremap <leader>m :MaximizerToggle!<CR>
 
 "NERDTREE SETTINGS
-nnoremap <leader>p :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <S-f> :NERDTreeFind<CR>
 nnoremap  <C-n> :tabnew<CR>
 
