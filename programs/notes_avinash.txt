@@ -8,3 +8,30 @@ slide 1
 
 good evening everyone 
 today i ll be presenting about my project active directory and domain services 
+
+slide 2
+
+points which i will be covering are overview of adds 
+adds physical and logical components
+
+slide 3
+
+the overview of adds  contains authentication authorization and deploying adds 
+it also contains centralized network management 
+and all the requirements  for installing adds 
+
+slide 4
+
+authentication is basically when we need to verify ourselves using user credentials 
+so that network authentication grants access to the resources and we can logon to a computer 
+
+
+slide 5 
+
+authorization is basically  verifying that  user has permissions to perform certain actions 
+for example when account is created SID is created 
+when accounts are issued security tokens they also include SIDs and group SIDs 
+the token is compared to the dacl 
+
+
+
