@@ -33,5 +33,9 @@ for example when account is created SID is created
 when accounts are issued security tokens they also include SIDs and group SIDs 
 the token is compared to the dacl 
 
+slide 6
+
+we should deploy adds in office environment because it provides centralized system fro managing everything on a network 
+it provides features like centralized directory 
 
 
