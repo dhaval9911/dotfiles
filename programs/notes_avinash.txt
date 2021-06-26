@@ -68,6 +68,68 @@ it replicates the updates to other domain controllers in the domain and forest
 it allows admin access to the user accounts and network resources 
 
 
+slide 11 
+
+the global catalog contains a copy of all adds objects in a forest 
+it improves the efficiency to object searches 
+that are required for users to logon 
+
+
+slide 12 
+
+the adds data store has all the database files and manages directory information for users and services 
+it contains ntds.dit file 
+it is stored inside the ntds folder on all domain controllers 
+and it can only accessed by domain contoller processes
+
+
+slide 13
+
+th adds replication is basically  a topology that is created automatically when a new domain controller is added 
+it ensures that all domain controllers have same information 
+and it can be managed   by creating addds sites 
+
+slide 14
+
+these are the location components from adds 
+
+slide 15 
+
+the adds schema ensures and defines what objects  can be created in the  directory 
+and information that can be attached to an object 
+
+
+slide 16 
+
+domains are used to manage groups and manage objects in an organization 
+it is basically a boundry for applying policies to group of objects or users
+it also provides replication to th policies 
+it  also provides boundry that is a way to limit the scope of access to the resources 
+
+slide 17 
+
+
+tree is basically a heirarchy of domanis in adds 
+they share a contigous namespace  with the parent domain 
+they can have child names 
+and by default the create a two-way transitive trust with other domains
+
+
+slide 18 
+
+these are all the adds objects 
+...
+
+
+slide 19 
+
+
+the practical 
+
+
+slide 20 
+
+thank you 
 
 
 
