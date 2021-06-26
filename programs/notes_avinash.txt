@@ -6,7 +6,7 @@ notes
 slide 1 
 
 
-good evening everyone 
+good morning everyone 
 today i ll be presenting about my project active directory and domain services 
 
 slide 2
@@ -37,5 +37,52 @@ slide 6
 
 we should deploy adds in office environment because it provides centralized system fro managing everything on a network 
 it provides features like centralized directory 
+there is integated security  and scalability is provided
+
+slide 7 
+
+centralized network management provides single location for managing users 
+resources are shared from a single location 
+adds enabled applications have directory service 
+we can also apply policies to all the users and computers 
+we have group policies fr managing a specific number of users 
+
+
+slide 8 
+
+these are the requirements fro installing adds 
+we need tcp ip  the credentials and the dns name to begin with 
+
+slide 9 
+
+
+
+these are the physical components of adds 
+
+
+slide 10 
+
+so first the domain controller is a server  installed with adds roles and has been promoted to a domain controller
+it provides authorization and authentication 
+it replicates the updates to other domain controllers in the domain and forest 
+it allows admin access to the user accounts and network resources 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
