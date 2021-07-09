@@ -59,6 +59,7 @@ set wildmenu
 set splitbelow
 set termwinsize=15x0
 set mouse=a
+vmap <C-c> :w !xclip -selection clipboard<CR>
 let mapleader = " " " space as leader key
 
 "leader  v to  edit .vimrc
@@ -96,7 +97,7 @@ hi Normal ctermbg=259
 "let g:airline_powerline_fonts = 1
 hi PmenuSel guibg=#98c379
 hi Pmenu guibg=#282c34
-"set background=dark 
+set background=dark 
 let g:python_highlight_all = 1
 "set completeopt-=preview
 
