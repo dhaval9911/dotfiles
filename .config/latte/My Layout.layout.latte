@@ -19,8 +19,8 @@ raiseOnDesktopChange=false
 settingsComplexity=4
 timerHide=200
 timerShow=0
-viewType=0
-visibility=2
+viewType=1
+visibility=0
 wallpaperplugin=org.kde.image
 
 [Containments][1][Applets][193]
@@ -28,7 +28,7 @@ immutability=1
 plugin=org.kde.plasma.minimizeall
 
 [Containments][1][Applets][193][Configuration]
-PreloadWeight=100
+PreloadWeight=92
 
 [Containments][1][Applets][193][Configuration][ConfigDialog]
 DialogHeight=558
@@ -42,7 +42,7 @@ immutability=1
 plugin=org.kde.plasma.kickoff
 
 [Containments][1][Applets][195][Configuration]
-PreloadWeight=98
+PreloadWeight=90
 
 [Containments][1][Applets][195][Configuration][ConfigDialog]
 DialogHeight=558
@@ -61,6 +61,9 @@ plugin=org.kde.latte.plasmoid
 PreloadWeight=0
 
 [Containments][1][Applets][2][Configuration][General]
+animationLauncherBouncing=false
+animationWindowAddedInGroup=false
+animationWindowInAttention=false
 groupTasksByDefault=false
 hoverAction=PreviewWindows
 isInLatteDock=true
@@ -73,14 +76,14 @@ immutability=1
 plugin=com.github.tilorenz.compact_pager
 
 [Containments][1][Applets][200][Configuration]
-PreloadWeight=83
+PreloadWeight=75
 
 [Containments][1][Applets][207]
 immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][1][Applets][207][Configuration]
-PreloadWeight=100
+PreloadWeight=92
 SystrayContainmentId=208
 
 [Containments][1][Applets][220]
@@ -88,7 +91,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][1][Applets][220][Configuration]
-PreloadWeight=47
+PreloadWeight=39
 
 [Containments][1][Applets][220][Configuration][General]
 showPercentage=true
@@ -98,7 +101,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][1][Applets][221][Configuration]
-PreloadWeight=47
+PreloadWeight=39
 
 [Containments][1][Applets][221][Configuration][ConfigDialog]
 DialogHeight=558
@@ -109,7 +112,7 @@ immutability=1
 plugin=org.kde.latte.separator
 
 [Containments][1][Applets][222][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][1][ConfigDialog]
 DialogHeight=615
@@ -120,21 +123,25 @@ PreloadWeight=0
 
 [Containments][1][General]
 advanced=false
+alignment=10
 alignmentUpgraded=true
 appletOrder=195;2;200;220;207;221;222;193
-backgroundShadowSize=2
+appletShadowsEnabled=false
+autoSizeEnabled=false
 blurEnabled=false
+dragActiveWindowEnabled=true
 durationTime=x3
+floatingInternalGapIsForced=false
 groupTasksByDefault=false
 hoverAction=PreviewWindows
-iconSize=36
+iconSize=32
 inConfigureAppletsMode=true
 lastSidebarVisibilityMode=9
 lengthExtMargin=12
 lockedZoomApplets=221
 minLength=6
-panelSize=97
-screenEdgeMargin=2
+panelSize=100
+plasmaBackgroundForPopups=true
 shadowOpacity=60
 shadowSize=55
 shadows=All
@@ -146,9 +153,9 @@ showOnlyCurrentScreen=true
 splitterPosition=1
 splitterPosition2=10
 tasksUpgraded=true
-thickMargin=15
+thickMargin=3
 titleTooltips=false
-zoomLevel=2
+zoomLevel=0
 
 [Containments][1][Indicator]
 customType=
@@ -192,7 +199,7 @@ immutability=1
 plugin=org.kde.plasma.kickoff
 
 [Containments][12][Applets][196][Configuration]
-PreloadWeight=62
+PreloadWeight=54
 
 [Containments][12][Applets][196][Configuration][ConfigDialog]
 DialogHeight=558
@@ -209,14 +216,14 @@ immutability=1
 plugin=org.kde.latte.separator
 
 [Containments][12][Applets][197][Configuration]
-PreloadWeight=2
+PreloadWeight=0
 
 [Containments][12][Applets][198]
 immutability=1
 plugin=com.github.tilorenz.compact_pager
 
 [Containments][12][Applets][198][Configuration]
-PreloadWeight=12
+PreloadWeight=4
 
 [Containments][12][Applets][198][Configuration][ConfigDialog]
 DialogHeight=558
@@ -246,7 +253,7 @@ immutability=1
 plugin=org.kde.plasma.minimizeall
 
 [Containments][12][Applets][41][Configuration]
-PreloadWeight=2
+PreloadWeight=0
 
 [Containments][12][ConfigDialog]
 DialogHeight=615
@@ -296,7 +303,7 @@ type=org.kde.latte.default
 glowEnabled=true
 
 [Containments][208]
-PreloadWeight=42
+PreloadWeight=34
 activityId=
 formfactor=2
 immutability=1
@@ -310,70 +317,70 @@ immutability=1
 plugin=org.kde.plasma.keyboardindicator
 
 [Containments][208][Applets][209][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][210]
 immutability=1
 plugin=org.kde.plasma.keyboardlayout
 
 [Containments][208][Applets][210][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][211]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][208][Applets][211][Configuration]
-PreloadWeight=52
+PreloadWeight=44
 
 [Containments][208][Applets][212]
 immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][208][Applets][212][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][213]
 immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][208][Applets][213][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][214]
 immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][208][Applets][214][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][215]
 immutability=1
 plugin=org.kde.plasma.vault
 
 [Containments][208][Applets][215][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][216]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][208][Applets][216][Configuration]
-PreloadWeight=67
+PreloadWeight=59
 
 [Containments][208][Applets][217]
 immutability=1
 plugin=org.kde.plasma.nightcolorcontrol
 
 [Containments][208][Applets][217][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][218]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][208][Applets][218][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][208][Applets][218][Configuration][General]
 showPercentage=true
@@ -383,11 +390,14 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][208][Applets][219][Configuration]
-PreloadWeight=82
+PreloadWeight=74
 
 [Containments][208][Applets][223]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
+
+[Containments][208][Applets][223][Configuration]
+PreloadWeight=42
 
 [Containments][208][General]
 extraItems=org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.devicenotifier,org.kde.plasma.mediacontroller,org.kde.kdeconnect,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.clipboard,org.kde.plasma.vault,org.kde.plasma.bluetooth,org.kde.plasma.battery,org.kde.plasma.volume,org.kde.plasma.nightcolorcontrol

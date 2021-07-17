@@ -18,3 +18,5 @@ alias ic="vim /home/lucifer/.config/i3/config"
 alias ix="vim /home/lucifer/.xmonad/xmonad.hs"
 alias la="ls -la"
 alias ll="ls -l"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
