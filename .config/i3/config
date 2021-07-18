@@ -1,7 +1,7 @@
 
 #MY_I3_CONFIG
 
-font pango:JetBrains MonoNL Bold  10 
+font pango:Ubuntu Mono Bold  10 
 
 for_window [class=".*"] border pixel 2
 for_window [class="latte-dock"]flaoting enable 
@@ -267,24 +267,23 @@ client.urgent        		$urgent-bg-color  	$urgent-bg-color      	$text-color
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
-#bar {
-#	i3bar_command i3bar -t
-#	font pango:JetBrains MonoNL Bold 10 
-#   # tray_output HDMI1
-#	position top
-exec_always --no-startup-id  /home/lucifer/.config/polybar/material/launch.sh &
-#
-#     status_command i3blocks -c /home/lucifer/.config/i3/i3blocks.conf
-#	colors {
-#    	background #282c34
-#		statusline #ffffff
-#		separator #666666
-#        #		                  border             			background        		 text
-#		focused_workspace  		 $focused_workspace-bg     	$inactive-bg-color      $custom-color			
-#		inactive_workspace		 $inactive-bg-color 		$inactive-bg-color 	    $inactive-text-color
-#		urgent_workspace   		 $urgent-bg-color   		$urgent-bg-color 	    $text-color
-#     }  
-#
-#     }
-#
+bar {
+	i3bar_command i3bar -t
+font pango:Ubuntu Mono Bold  10 
+   # tray_output HDMI1
+	position top
+
+     status_command i3blocks -c /home/lucifer/.config/i3/i3blocks.conf
+	colors {
+    	background #282c34
+		statusline #ffffff
+		separator #666666
+        #		                  border             			background        		 text
+		focused_workspace  		 $focused_workspace-bg     	$inactive-bg-color      $custom-color			
+		inactive_workspace		 $inactive-bg-color 		$inactive-bg-color 	    $inactive-text-color
+		urgent_workspace   		 $urgent-bg-color   		$urgent-bg-color 	    $text-color
+     }  
+
+     }
+
 
