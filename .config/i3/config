@@ -16,9 +16,7 @@ for_window [class = "Xfce4-terminal"] border pixel 2
 
 #Assign Workspaces 
 
-assign [class="VirtualBox Manager"] $ws7
 assign [class="google-keep-nativefier-d04d04"] $ws8
-assign [class="VirtualBox Machine"] $ws5
 assign [class="discord"] $ws9
 assign [class="Org.gnome.Nautilus"] $ws3
 gaps inner 2 
@@ -56,7 +54,6 @@ exec_always    nm-applet
 
 exec_always    blueman-applet 
 
-exec_always  autorandr
 
 exec_always picom --config /home/lucifer/.config/picom.conf -bc &
 
@@ -65,14 +62,14 @@ exec_always  dunst
 #exec_always ~/.config/mypolybar/launch.sh 
 
 #app hotkeys
-bindsym $mod+b exec brave-nightly 
+bindsym $mod+b exec brave
 bindsym $mod+n exec nautilus
 bindsym $mod+t exec gedit
 bindsym $mod+mod1+c exec pavucontrol
 
 #LAUNCH ROFI
-bindsym $mod+d exec --no-startup-id rofi -show drun -theme /home/lucifer/.config/rofi_themes/launchpad.rasi
-bindsym $mod+Shift+d exec  --no-startup-id rofi -show run -theme /home/lucifer/.config/rofi_themes/style_7.rasi
+bindsym $mod+d exec --no-startup-id rofi -show drun -theme /home/lucifer/.config/rofi_themes/launcher/kde_krunner.rasi
+bindsym $mod+Shift+d exec  --no-startup-id rofi -show run -theme /home/lucifer/.config/rofi_themes/launcher/row.rasi
 
 #window switcher rofi
 

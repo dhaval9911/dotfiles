@@ -78,6 +78,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
+    sudo
     zsh-syntax-highlighting
     zsh-autosuggestions)
 
@@ -107,11 +108,13 @@ source $ZSH/oh-my-zsh.sh
 #
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias aurup="sudo pacman -Syyu && yay -Syyu"
+alias xc="vim /home/lucifer/.xmonad/xmonad.hs"
 alias ls="lsd -l"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias dc="cd /home/lucifer/dhaval/work"
-alias zshconfig="mate ~/.zshrc"
+alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
+alias iconfig="vim /home/lucifer/.config/i3/config"
 #source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
