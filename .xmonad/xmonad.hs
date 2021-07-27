@@ -64,6 +64,7 @@ import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 
    -- Utilities
 import XMonad.Util.Dmenu
+import XMonad.Util.Loggers
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.EZConfig 
 import XMonad.Util.NamedScratchpad
@@ -531,14 +532,14 @@ main = do
               -- the following variables beginning with 'pp' are settings for xmobar.
               { ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
                             >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
-              , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]"           -- Current workspace
+              , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
               , ppVisible = xmobarColor "#98be65" "" . clickable              -- Visible but not current workspace
               , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" "" . clickable -- Hidden workspaces
               , ppHiddenNoWindows = xmobarColor "#c792ea" ""  . clickable     -- Hidden workspaces (no windows)
               , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
               , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
               , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
-              , ppExtras  = [windowCount]                                     -- # of windows current workspace
+        --      , ppExtras  = [windowCount]                                     -- # of windows current workspace
               , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]                    -- order of things in xmobar
               }
         } `additionalKeysP` myKeys
