@@ -17,7 +17,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=t
       , persistent = True
        , iconRoot = "/home/lucifer/.xmonad/xpm/"  -- default: "."
        , commands = [
-                      Run Date "<fn=2>\xf017</fn>  %b %d %Y |  %I:%M  " "date" 50
+                      Run Date "<fn=2>\xf017</fn> % %b %d  |  %I:%M  " "date" 50
                     , Run Network "wlan0" ["-t", "<fn=2>\xf0ab</fn>  <rx>kb  <fn=2>\xf0aa</fn>  <tx>kb"] 20
                     --, Run Battery [ "-t", "<left>%", "-L", "50", "-H"< "75", "-h","green", "-n", "yell","-l","red"] "Battery"  10
      --               , Run Cpu ["-t", "<fn=2>\xf108</fn>  cpu: (<total>%)","-H","50","--high","red"]  20

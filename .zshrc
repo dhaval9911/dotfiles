@@ -120,3 +120,4 @@ alias iconfig="vim /home/lucifer/.config/i3/config"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+pfetch
