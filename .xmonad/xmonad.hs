@@ -313,7 +313,7 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                                  ||| wideAccordion
 
 -- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-myWorkspaces = [" code ", " www ", " file ", " doc ", " vbox ", " chat ", " mus ", " vid ", " gfx "]
+myWorkspaces = [" code ", " www ", " file ", " doc ", " vbox ", " note ", " vid ", " chat ", " misc "]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
@@ -336,11 +336,12 @@ myManageHook = composeAll
      , className =? "splash"          --> doFloat
      , className =? "toolbar"         --> doFloat
      , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
-     , className =? "brave-browser"   --> doShift ( myWorkspaces !! 1 )
+     , className =? "brave"   --> doShift ( myWorkspaces !! 1 )
      , className =? "qutebrowser"     --> doShift ( myWorkspaces !! 1 )
      , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
      , className =? "Gimp"            --> doShift ( myWorkspaces !! 8 )
      , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
+     , className =? "Notion" --> doShift  ( myWorkspaces !! 5 )
      , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
@@ -353,12 +354,14 @@ myKeys =
         , ("M-M1-n", spawn "thunar")
         , ("M-M1-l", spawn "betterlockscreen -s blur")
         , ("M-M1-s", spawn "flameshot gui")
+        , ("M-M1-c", spawn "pavucontrol")
 
     -- Run Prompt
-        , ("M-S-<Return>", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher2.sh") -- Dmenu
+        ,, ("M-S-<Return>", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher2.sh") -- Dmenu
     -- Run rofi 
         , ("M-d", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher.sh") -- Dmenu
     -- Run rofi 
+        , ("M1-<Tab>", spawn "rofi -show window -theme /home/lucifer/.config/rofi_themes/window_switch/kde_krunner.rasi") -- Dmenu
     --
     -- Other Dmenu Prompts
     -- In Xmonad and many tiling window managers, M-p is the default keybinding to
@@ -369,7 +372,7 @@ myKeys =
         , ("M-p e", spawn "dm-confedit")  -- edit config files
         , ("M-p i", spawn "dm-maim")      -- screenshots (images)
         , ("M-p k", spawn "dm-kill")      -- kill processes
-        , ("M-p m", spawn "dm-man")       -- manpages
+        , ("M-p m", spawn "dm-man")       -- manpages p
         , ("M-p o", spawn "dm-bookman")   -- qutebrowser bookmarks/history
         , ("M-p p", spawn "passmenu")     -- passmenu
         , ("M-p q", spawn "dm-logout")    -- logout menu
@@ -466,9 +469,8 @@ myKeys =
 
     -- Controls for mocp music player (SUPER-u followed by a key)
         , ("M-u p", spawn "mocp --play")
-        , ("M-u l", spawn "mocp --next")
-        , ("M-u h", spawn "mocp --previous")
-        , ("M-M1 c", spawn "pavucontrol")
+        , ("M-u n", spawn "mocp --next")
+        , ("M-u m", spawn "mocp --previous")
         , ("M-u <Space>", spawn "mocp --toggle-pause")
 
     -- Emacs (CTRL-e followed by a key)

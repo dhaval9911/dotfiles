@@ -70,8 +70,8 @@ listview {
     padding:                        0px;
     columns:                        1;
     lines:                          5;
-    spacing:                        0%;
-    cycle:                          false;
+    spacing:                        3%;
+    cycle:                         true; 
     dynamic:                        true;
     layout:                         vertical;
 }
