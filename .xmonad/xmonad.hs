@@ -335,13 +335,16 @@ myManageHook = composeAll
      , className =? "pinentry-gtk-2"  --> doFloat
      , className =? "splash"          --> doFloat
      , className =? "toolbar"         --> doFloat
+     , title =? "File Operation Progress" --> doFloat
      , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
-     , className =? "brave"   --> doShift ( myWorkspaces !! 1 )
-     , className =? "qutebrowser"     --> doShift ( myWorkspaces !! 1 )
+     , className =? "brave-browser"   --> doShift ( myWorkspaces !! 1 )
+     , className =? "Brave-Browser"     --> doShift ( myWorkspaces !! 1 )
      , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
-     , className =? "Gimp"            --> doShift ( myWorkspaces !! 8 )
+     , className =? "obs"            --> doShift ( myWorkspaces !! 8 )
      , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
      , className =? "Notion" --> doShift  ( myWorkspaces !! 5 )
+     , className =? "Zathura" --> doShift  ( myWorkspaces !! 3 )
+     , className =? "vlc" --> doShift  ( myWorkspaces !! 6 )
      , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
@@ -357,7 +360,7 @@ myKeys =
         , ("M-M1-c", spawn "pavucontrol")
 
     -- Run Prompt
-        ,, ("M-S-<Return>", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher2.sh") -- Dmenu
+        , ("M-S-<Return>", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher2.sh") -- Dmenu
     -- Run rofi 
         , ("M-d", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher.sh") -- Dmenu
     -- Run rofi 
@@ -495,8 +498,8 @@ myKeys =
         , ("<XF86AudioPrev>", spawn ("playerctl previous"))
         , ("<XF86AudioNext>", spawn ("playerctl next"))
         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle && exec notify-send Mute -t 500")
-        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
-        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
+        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
+        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
         , ("<XF86HomePage>", spawn "qutebrowser https://www.youtube.com/c/DistroTube")
         , ("<XF86Search>", spawn "dmsearch")
         , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))
