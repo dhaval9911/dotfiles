@@ -330,6 +330,7 @@ myManageHook = composeAll
      , className =? "dialog"          --> doFloat
      , className =? "download"        --> doFloat
      , className =? "error"           --> doFloat
+     , className =? "trayer"           --> doFloat
      , className =? "Gimp"            --> doFloat
      , className =? "notification"    --> doFloat
      , className =? "pinentry-gtk-2"  --> doFloat
@@ -502,8 +503,8 @@ myKeys =
         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle && exec notify-send Mute -t 500")
         , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
         , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
-        , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10")
-        , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10")
+        , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10 && notify-send Brightness:$(xbacklight | cut -f1 -d '.')  -t 500")
+        , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10 && notify-send Brightness:$(xbacklight | cut -f1 -d '.') -t 500")
         , ("<XF86HomePage>", spawn "qutebrowser https://www.youtube.com/c/DistroTube")
         , ("<XF86Search>", spawn "dmsearch")
         , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))

@@ -19,7 +19,7 @@
 # Get custom IN and OUT labels if provided by command line arguments
 
 
-INTERFACE=wlp6s0
+INTERFACE=wlan0
 
 
 while [[ $# -gt 1 ]]; do
