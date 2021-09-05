@@ -327,6 +327,12 @@ myManageHook = composeAll
      -- name of my workspaces and the names would be very long if using clickable workspaces.
      [ className =? "confirm"         --> doFloat
      , className =? "file_progress"   --> doFloat
+     , className =? "xfce4-appfinder"   --> doFloat
+     , className =? "wpspdf"   --> doFloat
+     , className =? "pdf"   --> doFloat
+     , className =? "nitrogen"   --> doFloat
+     , className =? "Nitrogen"   --> doFloat
+     , className =? "Xfce4-appfinder"   --> doFloat
      , className =? "dialog"          --> doFloat
      , className =? "download"        --> doFloat
      , className =? "error"           --> doFloat
@@ -365,8 +371,9 @@ myKeys =
     -- Run Prompt
         , ("M-S-<Return>", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher2.sh") -- Dmenu
     -- Run rofi 
-        , ("M-d", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher.sh") -- Dmenu
-    -- Run rofi 
+    --    , ("M-d", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher.sh") -- Dmenu
+        , ("M-d", spawn "xfce4-appfinder") -- Dmenu
+    --
         , ("M1-<Tab>", spawn "rofi -show window -theme /home/lucifer/.config/rofi_themes/window_switch/kde_krunner.rasi") -- Dmenu
     --
     -- Other Dmenu Prompts
