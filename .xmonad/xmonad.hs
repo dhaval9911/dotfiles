@@ -32,7 +32,7 @@ import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, s
 import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
 import XMonad.Hooks.ManageDocks 
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..), SetStruts)
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WorkspaceHistory
@@ -325,24 +325,23 @@ myManageHook = composeAll
      -- using 'doShift ( myWorkspaces !! 7)' sends program to workspace 8!
      -- I'm doing it this way because otherwise I would have to write out the full
      -- name of my workspaces and the names would be very long if using clickable workspaces.
-     [ className =? "confirm"         --> doFloat
-     , className =? "file_progress"   --> doFloat
-     , className =? "xfce4-appfinder"   --> doFloat
-     , className =? "wpspdf"   --> doFloat
-     , className =? "pdf"   --> doFloat
-     , className =? "nitrogen"   --> doFloat
-     , className =? "Nitrogen"   --> doFloat
-     , className =? "Xfce4-appfinder"   --> doFloat
-     , className =? "dialog"          --> doFloat
-     , className =? "download"        --> doFloat
-     , className =? "error"           --> doFloat
-     , className =? "trayer"           --> doFloat
-     , className =? "Gimp"            --> doFloat
-     , className =? "notification"    --> doFloat
-     , className =? "pinentry-gtk-2"  --> doFloat
-     , className =? "splash"          --> doFloat
+     [ className =? "confirm"            --> doFloat
+     , className =? "file_progress"      --> doCenterFloat
+     , className =? "xfce4-appfinder"      --> doFloat
+     , className =? "nitrogen"   -->    doCenterFloat   
+     , className =? "Nitrogen"   -->    doCenterFloat   
+     , className =? "Xfce4-appfinder"      --> doFloat
+     , className =? "dialog"             --> doCenterFloat
+     , className =? "download"           --> doCenterFloat
+     , className =? "error"              --> doCenterFloat
+     , className =? "Trayer"              --> doFloat
+     , className =? "Gimp"               --> doFloat
+     , className =? "notification"       --> doFloat
+     , className =? "pinentry-gtk-2"     --> doFloat
+     , className =? "splash"             --> doFloat
+     , className =? "Yad"          --> doCenterFloat
      , className =? "toolbar"         --> doFloat
-     , title =? "File Operation Progress" --> doFloat
+     , title =? "File Operation Progress" --> doCenterFloat
      , title =? "Virtual Media Manager" --> doFloat
      , title =? "Host Network Manager" --> doFloat
      , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
@@ -351,6 +350,7 @@ myManageHook = composeAll
      , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
      , className =? "obs"            --> doShift ( myWorkspaces !! 8 )
      , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
+     , className =? "pdf"   --> doShift ( myWorkspaces !! 3 ) 
      , className =? "Notion" --> doShift  ( myWorkspaces !! 5 )
      , className =? "Zathura" --> doShift  ( myWorkspaces !! 3 )
      , className =? "vlc" --> doShift  ( myWorkspaces !! 6 )
@@ -358,9 +358,10 @@ myManageHook = composeAll
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
 
+-- START_KEYS
 myKeys :: [(String, X ())]
 myKeys =
-    -- Xmonad
+      -- KB_GROUP Xmonad
         [ ("M-S-p", spawn "xmonad --recompile && xmonad --restart")    -- Restarts xmonad
         , ("M-S-q", io exitSuccess)              -- Quits xmonad
         , ("M-M1-n", spawn "thunar")
@@ -522,7 +523,7 @@ myKeys =
     -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
                 nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
-
+-- END_KEYS
 main :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
@@ -549,10 +550,11 @@ main = do
               -- the following variables beginning with 'pp' are settings for xmobar.
               { ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
                             >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
-              , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
-              , ppVisible = xmobarColor "#98be65" "" . clickable              -- Visible but not current workspace
-              , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" "" . clickable -- Hidden workspaces
-              , ppHiddenNoWindows = xmobarColor "#c792ea" ""  . clickable     -- Hidden workspaces (no windows)
+              , ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
+             -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
+              , ppVisible = xmobarColor "#b3afc2" "" . clickable              -- Visible but not current workspace
+              , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
+              , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  . clickable     -- Hidden workspaces (no windows)
               , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
               , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
               , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace

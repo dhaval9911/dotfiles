@@ -6,27 +6,29 @@
 "
 "---------------------------------------------------
 
-"
-" ░█▀█░█░░░█░█░█▀▀░▀█▀░█▀█░█▀▀
-" ░█▀▀░█░░░█░█░█░█░░█░░█░█░▀▀█
-" ░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
-"
+"---------------PLUGINS------------------
 call plug#begin('~/.vim/plugged')
-   Plug 'szw/vim-maximizer'
-   Plug 'Xuyuanp/nerdtree-git-plugin'
-   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-   Plug 'neoclide/coc-snippets'
-   Plug 'tomasiser/vim-code-dark'
-   Plug 'Yggdroot/indentLine'
-   Plug 'vim-scripts/indentpython'
-   Plug 'tmhedberg/SimpylFold'
-   Plug 'joshdick/onedark.vim'
-   Plug 'ap/vim-css-color' 
-   Plug 'itchyny/lightline.vim'
-   Plug 'Raimondi/delimitMate'
-   Plug 'jmcantrell/vim-virtualenv' 
-   Plug 'preservim/nerdtree'
-call plug#end()
+    Plug 'sbdchd/neoformat'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc-snippets'
+    Plug 'tomasiser/vim-code-dark'
+    " Plug 'SirVer/ultisnips' 
+    Plug 'Yggdroot/indentLine'
+    Plug 'vim-scripts/indentpython'
+    Plug 'tmhedberg/SimpylFold'
+    Plug 'morhetz/gruvbox'
+    Plug 'ap/vim-css-color' 
+    Plug 'danilo-augusto/vim-afterglow'
+    Plug 'itchyny/lightline.vim'
+    Plug 'Raimondi/delimitMate'
+    Plug 'jmcantrell/vim-virtualenv' 
+"    Plug 'vim-airline/vim-airline'
+ ""   Plug 'vim-airline/vim-airline-themes'
+    Plug 'ap/vim-css-color'
+    Plug 'kassio/neoterm' 
+    " Plug 'Valloric/YouCompleteMe'
+ Plug 'preservim/nerdtree'
+ call plug#end()
 
 "-----------------------------------------
 
@@ -41,7 +43,7 @@ syntax enable
 scriptencoding=utf-8
 
 "---------------------------------------------------
-set cursorline
+
 set laststatus=2
 set autoindent
 set expandtab
@@ -61,9 +63,8 @@ set shiftwidth=4
 set tabstop=4
 set wildmenu
 set splitbelow
-set termwinsize=15x0
-set mouse=a
-vmap <C-c> :w !xclip -selection clipboard<CR>
+set termwinsize=10x0
+
 let mapleader = " " " space as leader key
 
 "leader  v to  edit .vimrc
@@ -75,6 +76,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L> 
 nnoremap <C-H> <C-W><C-H> 
 
+"map ii inplace of Esc 
+imap ii <Esc>
+
 "leader + e to save
 nnoremap <silent><leader>e   :w<cr>
 "leader + w to save and quit
@@ -85,32 +89,28 @@ nnoremap <leader>u YpVr
 
 " itchyny/lightline.vim and itchyny/vim-gitbranch
 let g:lightline = {
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-    \ },
-    \ 'colorscheme': 'codedark'
-    \ }
- ""   \ 'component_function': {
- ""   \   'gitbranch': 'gitbranch#name'
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ 'colorscheme': 'codedark',
+      \ }
+
 set termguicolors
-"let g:onedark_termcolors=256
-colorscheme onedark  
+colorscheme codedark 
 hi Normal ctermbg=259
 "let airline_theme='fairyfloss' 
 "let g:airline_powerline_fonts = 1
+
 hi PmenuSel guibg=#98c379
 hi Pmenu guibg=#282c34
 set background=dark 
 let g:python_highlight_all = 1
 "set completeopt-=preview
 
-highlight! StatusLineNC gui=underline guibg=NONE guifg=#383c44
-"hi clear CursorLine
-"hi cursorlinenr guibg=NONE guifg=#abb2bf
-
-"map ii inplace of Esc 
-imap ii <Esc>
 
 if executable('rg')
     let g:rg_derive_root= 'true'
@@ -121,10 +121,20 @@ endif
 " szw/vim-maximizer
 nnoremap <leader>m :MaximizerToggle!<CR>
 
+"nerdtree toggles
+nnoremap <leader>p :NERDTreeFocus<CR>
+
 "NERDTREE SETTINGS
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <S-f> :NERDTreeFind<CR>
 nnoremap  <C-n> :tabnew<CR>
+
+"ctrl navigation for insert mode
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+
 
 " enable line numbers in nerdtree 
 let NERDTreeShowLineNumbers=1
@@ -141,22 +151,20 @@ let NERDTreeDirArrows = 1
 autocmd BufWinEnter * silent :NERDTreeMirror
 
 
-"ctrl navigation for insert mode
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+" kassio/neoterm
+let g:neoterm_default_mod = 'vertical'
+ let g:neoterm_size = 100
+let g:neoterm_autoinsert = 1
+let g:neoterm_autoscroll = 1
+let g:neoterm_term_per_tab = 1
+nnoremap <c-y> :Ttoggle<CR>
+inoremap <c-y> <Esc>:Ttoggle<CR>
+tnoremap <c-y> <c-\><c-n>:Ttoggle<CR>
 
-"insert mode go to end of line
-imap <C-e> <ESC>A
-imap <C-r> <ESC>0i
+" sbdchd/neoformat
+nnoremap <leader>F :Neoformat prettier<CR>
 
-
-"Shift s to switch to next tab
 nnoremap <S-s> :tabnext<CR>
-
-"open terminal
-nnoremap <leader>t :term<CR>
 
 "hide preview 
 let g:netrw_banner = 0
@@ -175,10 +183,10 @@ endif
 autocmd FileType python map <buffer> <F9> :w<CR>:term python3 "%"<CR>
 
 "F8 to run C program
-map <F8> :!echo ------------------------------------------------------------------------<CR> :w <CR> :!gcc % -o %< && ./%<<CR>
+map <F8> :w <CR> :!gcc % -o %< && ./%<<CR>
 
 
-""CONFIG FOR COC COMPLETION
+"CONFIG FOR COC COMPLETION
 
 if has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
@@ -310,7 +318,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-"nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
