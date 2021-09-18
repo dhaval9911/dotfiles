@@ -1,0 +1,90 @@
+2021-09-18	rc.xml KEYBINDS
+-------------------------------
+
+ 0	W-1           				GoToDesktop
+ 1	W-2           				GoToDesktop
+ 2	W-3           				GoToDesktop
+ 3	W-4           				GoToDesktop
+ 4	W-5           				GoToDesktop
+ 5	S-W-1         				SendToDesktop
+ 6	S-W-2         				SendToDesktop
+ 7	S-W-3         				SendToDesktop
+ 8	S-W-4         				SendToDesktop
+ 9	S-W-5         				SendToDesktop
+10	A-Tab         				NextWindow
+11	W-Tab         				NextWindow
+12	W-Left        				UnmaximizeFull
+13	W-Right       				UnmaximizeFull
+14	W-Up          				MaximizeFull
+15	W-Down        				UnmaximizeFull
+16	W-k           				Unmaximize
+17	W-h           				Unmaximize
+18	W-j           				Unmaximize
+19	W-l           				Unmaximize
+20	A-z           				Unmaximize
+21	A-x           				Unmaximize
+22	A-c           				Unmaximize
+23	W-A-Up        				MoveRelative
+24	W-A-Down      				MoveRelative
+25	W-A-Left      				MoveRelative
+26	W-A-Right     				MoveRelative
+27	C-A-Right     				ResizeRelative
+28	C-A-Left      				ResizeRelative
+29	C-A-Down      				ResizeRelative
+30	C-A-Up        				ResizeRelative
+31	W-S-Left      				SendToDesktopLeft
+32	W-S-Right     				SendToDesktopRight
+33	XF86AudioRaiseVolume	volume-up
+34	XF86AudioLowerVolume	volume-down
+35	XF86AudioMute  			amixer set Master toggle
+36	XF86AudioStop  			mpc stop
+37	XF86AudioPlay  			mpc toggle
+38	XF86AudioPrev  			mpc prev
+39	XF86AudioNext  			mpc next
+40	XF86MonBrightnessUp	backlight-up
+41	XF86MonBrightnessDown	backlight-down
+42	Print         				scrot 'Screenshot_%Y-%m-%d-%I-%M-%S_$wx$h.png' -e 'mv $f $$(xdg-user-d.....
+43	A-Print       				scrot -d 5 'Screenshot_%Y-%m-%d-%I-%M-%S_$wx$h.png' -e 'mv $f $$(xdg-u.....
+44	C-Print       				scrot -u -b 'Screenshot_%Y-%m-%d-%I-%M-%S_$wx$h.png' -e 'mv $f $$(xdg-.....
+45	W-e           				geany
+46	W-f           				thunar
+47	W-t           				alacritty --config-file ~/.config/alacritty/fullscreen.yml
+48	W-Return      				alacritty
+49	W-w           				midori
+50	W-n           				networkmanager_dmenu
+51	A-F1          				~/.config/rofi/bin/launcher
+52	W-m           				~/.config/rofi/bin/mpd
+53	W-x           				~/.config/rofi/bin/powermenu
+54	W-s           				~/.config/rofi/bin/screenshot
+55	W-i           				~/.config/rofi/bin/network
+56	W-p           				color_picker
+57	W-v           				tasks
+58	C-A-t         				xfce4-terminal
+59	C-A-v         				alacritty -e vim
+60	C-A-r         				alacritty -e ranger
+61	C-A-h         				alacritty -e htop
+62	C-A-l         				betterlockscreen --lock
+63	C-S-Escape     			Exit
+64	C-S-BackSpace  			Restart
+65	C-S-R         				Reconfigure
+66	W-Escape      				xkill
+67	W-c           				Close
+68	W-q           				Close
+69	A-F5          				Iconify
+70	A-F6          				ToggleMaximize
+71	A-F7          				ToggleDecorations
+72	W-d           				ToggleShowDesktop
+73	A-r           				Resize
+74	A-m           				Move
+75	W-space       				root-menu
+76	C-A-space     				app-menu
+77	A-space       				client-menu
+78	W-KP_1        				UnmaximizeFull
+79	W-KP_2        				UnmaximizeFull
+80	W-KP_3        				UnmaximizeFull
+81	W-KP_4        				UnmaximizeFull
+82	W-KP_5        				MaximizeFull
+83	W-KP_6        				UnmaximizeFull
+84	W-KP_7        				UnmaximizeFull
+85	W-KP_8        				UnmaximizeFull
+86	W-KP_9        				UnmaximizeFull
