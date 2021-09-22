@@ -1,116 +1,87 @@
+## i3wm configuration for Archcraft
+## Created by : Aditya Shakya | <adi1090x>
 
-#MY_I3_CONFIG
+##-- Mod Keys ----------------------------
+set $mod Mod4
+set $alt Mod1
 
-font pango:Ubuntu Mono Bold  10 
+##-- Fonts (Global) ----------------------
+font pango:JetBrains Mono Medium 10
 
-for_window [class=".*"] border pixel 2
-for_window [class="latte-dock"]flaoting enable 
-for_window [class= "Gedit"] floating enable; move absolute  position 500 px 800 px 
-for_window [class="google-keep-nativefier-d04d04"] border none
-for_window [class = "Pavucontrol"] floating enable 
-for_window [class = "Polybar"] floating enable 
-for_window [class = "polybar"] floating enable; border none ; outer gaps 3 
-for_window [class = "Xfce4-terminal"] border pixel 2 
+##-- Gaps --------------------------------
 
+# Title bar text alignment
+title_align center
 
+# Uncomment this to enable title bars
+#for_window [class=".*"] border normal 4
 
-#Assign Workspaces 
+# Uncomment this to disable title bars
+for_window [class=".*"] border pixel 4
 
-assign [class="google-keep-nativefier-d04d04"] $ws8
-assign [class="discord"] $ws9
-assign [class="Org.gnome.Nautilus"] $ws3
-gaps inner 2 
-gaps outer 2
+# Gaps (Outer gaps are added to the inner gaps)
+gaps inner 15
+gaps outer 0
+
+# Only enable gaps on a workspace when there is at least one container
+#smart_gaps on
 
 # Activate smart borders (always)
 smart_borders on
 
-# Activate smart borders (only when there are effectively no gaps)
-smart_borders no_gaps
+##-- Colors ------------------------------
 
-#hide_edge_borders both
+# class                 border  backgr. text    indicator child_border
+client.focused          #DA6E89 #DA6E89 #FFFFFF #98C379   #DA6E89
+client.focused_inactive #61AFEF #61AFEF #1E222A #98C379   #61AFEF
+client.unfocused        #2C3038 #2C3038 #FFFFFF #98C379   #2C3038
+client.urgent           #C678DD #C678DD #FFFFFF #98C379   #C678DD
+client.placeholder      #1E222A #1E222A #FFFFFF #98C379   #1E222A
 
-# start a terminal
-bindsym $mod+x exec xfce4-terminal 
+client.background       #1E222A
 
-# kill focused window
-bindsym $mod+q kill
+##-- Autostart ---------------------------
 
-#lock screen 
-bindsym $mod+Shift+y exec dm-tool lock
+exec_always --no-startup-id ~/.config/i3/bin/autostart.sh
 
-#disable second display
+##-- Key Bindings ------------------------
 
-bindsym $mod+Shift+i exec /home/lucifer/.screenlayout/s2.sh && picom
+# -- Apps --
+bindsym $mod+Return exec ~/.config/i3/bin/i3term.sh
+bindsym $mod+Shift+Return exec ~/.config/i3/bin/i3term.sh -f
+bindsym $mod+Shift+f exec thunar
+bindsym $mod+Shift+e exec geany
+bindsym $mod+Shift+w exec firefox
 
-#enable second display
+# -- Rofi --
+bindsym $alt+F1 exec ~/.config/i3/rofi/bin/launcher
+bindsym $mod+n exec ~/.config/i3/rofi/bin/network_menu
+bindsym $mod+x exec ~/.config/i3/rofi/bin/powermenu
+bindsym $alt+Control+m exec ~/.config/i3/rofi/bin/mpd
+bindsym $alt+Control+n exec ~/.config/i3/rofi/bin/network
+bindsym $alt+Control+s exec ~/.config/i3/rofi/bin/screenshot
+bindsym $alt+Control+r exec ~/.config/i3/rofi/bin/asroot
+bindsym $alt+Control+w exec ~/.config/i3/rofi/bin/windows
 
-bindsym $mod+mod1+i  exec /home/lucifer/.screenlayout/s1.sh && picom &
+# -- Function keys --
+bindsym XF86MonBrightnessUp exec --no-startup-id backlight-up
+bindsym XF86MonBrightnessDown exec --no-startup-id backlight-down
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume-up
+bindsym XF86AudioLowerVolume exec --no-startup-id volume-down
+bindsym XF86AudioMute exec --no-startup-id amixer set Master toggle
 
+# -- i3wm --
 
-#startup apps
-
-exec_always    nm-applet
-
-exec_always    blueman-applet 
-
-
-exec_always picom --config /home/lucifer/.config/picom.conf -bc &
-
-exec_always  dunst
-
-#exec_always ~/.config/mypolybar/launch.sh 
-
-#app hotkeys
-bindsym $mod+b exec brave
-bindsym $mod+n exec nautilus
-bindsym $mod+t exec gedit
-bindsym $mod+mod1+c exec pavucontrol
-
-#LAUNCH ROFI
-bindsym $mod+d exec --no-startup-id rofi -show drun -theme /home/lucifer/.config/rofi_themes/launcher/kde_krunner.rasi
-bindsym $mod+Shift+d exec  --no-startup-id rofi -show run -theme /home/lucifer/.config/rofi_themes/launcher/row.rasi
-
-#window switcher rofi
-
-bindsym $mod+Tab exec rofi -no-config -no-lazy-grab -show window  -theme ~/.config/polybar/material/scripts/rofi/launcher.rasi
-
-
-#change the brightness
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
-
-#kill picom 
-bindsym $mod+shift+p exec xfce4-terminal -e "killall picom"
-
-#kill polybar
-
-bindsym $mod+mod1+p exec xfce4-terminal -e "killall polybar"
-
-
-
-# i3 config file (v4)
-
-set $mod Mod4
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% 
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && exec notify-send Mute -t 300
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && exec notify-send UnMute -t 300
+# Lockscreen
+bindsym $alt+Control+l exec ~/.config/i3/bin/i3lock.sh
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+# kill focused window
+bindsym $mod+c kill
+bindsym $mod+q kill
+bindsym $mod+Shift+q kill
 
 # change focus
 bindsym $mod+j focus left
@@ -151,27 +122,18 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
 
-#move workspace to eDP-1
-
-bindsym $mod+m move workspace to output  eDP1
-
-#move workspace to HDMI1
-
-bindsym $mod+Shift+m move workspace to output HDMI1
-
-
-
-
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+d focus child
+
+##-- Workspaces ---------------------
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -212,28 +174,15 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
-
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+##-- Resize / Move / Gaps ------------------------
 
 # resize window (you can also use the mouse for that)
-mode "resize" {
+mode "Resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-
-# Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
@@ -244,43 +193,73 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
+bindsym $mod+r mode "Resize"
 
-bindsym $mod+r mode "resize"
+mode "Move" {
+        # These bindings trigger as soon as you enter the Move mode
 
-set $bg-color 	         		#2f343f
-set $inactive-bg-color   		#282c34 
-set $text-color          		#ffffff
-set $inactive-text-color 		#ffffff
-set $urgent-bg-color    		#E53935
-set $custom-color		    	#0565ff  
-set $border-color		    	#0565ff
-set $focused_workspace-bg       #969e98
-# window colors
-#                 			 border              	background    		     	text     	 	 indicator
-client.focused        		$custom-color       $custom-color       	$text-color             #ff0000
-client.unfocused      		$inactive-bg-color 	$inactive-bg-color 		$inactive-text-color 
-client.focused_inactive 	$inactive-bg-color 	$inactive-bg-color 		$inactive-text-color 
-client.urgent        		$urgent-bg-color  	$urgent-bg-color      	$text-color          
+        bindsym Left move left 20px
+        bindsym Down move down  20px
+        bindsym Up move up 20px
+        bindsym Right move right 20px
 
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+m mode "default"
+}
+bindsym $mod+m mode "Move"
 
-# Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
-bar {
-	i3bar_command i3bar -t
-font pango:Ubuntu Mono Bold  10 
-   # tray_output HDMI1
-	position top
+set $mode_gaps Gaps: (o)uter, (i)nner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 
-     status_command i3blocks -c /home/lucifer/.config/i3/i3blocks.conf
-	colors {
-    	background #282c34
-		statusline #ffffff
-		separator #666666
-        #		                  border             			background        		 text
-		focused_workspace  		 $focused_workspace-bg     	$inactive-bg-color      $custom-color			
-		inactive_workspace		 $inactive-bg-color 		$inactive-bg-color 	    $inactive-text-color
-		urgent_workspace   		 $urgent-bg-color   		$urgent-bg-color 	    $text-color
-     }  
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
 
-     }
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
 
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
 
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+##-- Workspace Rules ------------------------
+assign [class="Lxappearance|Nitrogen"] 6
+assign [class="Pavucontrol|Xfce4-power-manager-settings"] 6
+
+##-- Window Rules ------------------------
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="alacritty-float"] floating enable
+for_window [class="Lxappearance|Nitrogen"] floating enable
+for_window [class="Pavucontrol|Xfce4-power-manager-settings|Nm-connection-editor"] floating enable
+for_window [class="feh|Viewnior|Gpicview|Gimp"] floating enable
+for_window [class="Kvantum Manager|qt5ct"] floating enable
+for_window [class="VirtualBox Manager|qemu|Qemu-system-x86_64"] floating enable
+for_window [title="About : Aditya Shakya|Getting Started"] floating enable

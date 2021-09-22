@@ -112,16 +112,16 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
    -- spawnOnce "lxsession &"
-    spawnOnce "picom &"
-    spawnOnce "nm-applet &"
+    spawnOnce "compton &"
+    spawnOnce "mpd &"
 --    spawnOnce "volumeicon &"
-    spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
-    spawnOnce "conky -c /home/lucifer/.config/conky/Rock/.conkyrc2"
+   -- spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
+   -- spawnOnce "conky -c /home/lucifer/.config/conky/Rock/.conkyrc2"
 --    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0  --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
     --spawnOnce "/usr/bin/emacs --daemon &" -- emacs daemon for the emacsclient
     -- spawnOnce "kak -d -s mysession &"  -- kakoune daemon for better performance
     -- spawnOnce "urxvtd -q -o -f &"      -- urxvt daemon for better performance
-
+    spawnOnce "/bin/zsh ~/.config/polybar/default/launch.sh "
   --  spawnOnce "xargs xwallpaper --stretch < ~/.xwallpaper"  -- set last saved with xwallpaper
     -- spawnOnce "/bin/ls ~/wallpapers | shuf -n 1 | xargs xwallpaper --stretch"  -- set random xwallpaper
     -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
@@ -312,8 +312,8 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                                  ||| tallAccordion
                                  ||| wideAccordion
 
--- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-myWorkspaces = [" code ", " www ", " file ", " doc ", " vbox ", " note ", " vid ", " chat ", " misc "]
+--myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
+myWorkspaces = ["code", "www", "file", "doc", "vbox", "note", "vid", "chat", "misc"]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
@@ -327,6 +327,10 @@ myManageHook = composeAll
      -- name of my workspaces and the names would be very long if using clickable workspaces.
      [ className =? "confirm"            --> doFloat
      , className =? "file_progress"      --> doCenterFloat
+     , className =? "Thunar"      --> hasBorder False
+     , className =? "Thunar"      --> doCenterFloat 
+     , className =? "viewnior"      --> doCenterFloat
+     , className =? "Viewnior"      --> doCenterFloat
      , className =? "xfce4-appfinder"      --> doFloat
      , className =? "nitrogen"   -->    doCenterFloat   
      , className =? "Nitrogen"   -->    doCenterFloat   
@@ -337,6 +341,7 @@ myManageHook = composeAll
      , className =? "Trayer"              --> doFloat
      , className =? "Gimp"               --> doFloat
      , className =? "notification"       --> doFloat
+     , className =? "rofi"       --> doCenterFloat
      , className =? "pinentry-gtk-2"     --> doFloat
      , className =? "splash"             --> doFloat
      , className =? "Yad"          --> doCenterFloat
@@ -362,20 +367,23 @@ myManageHook = composeAll
 myKeys :: [(String, X ())]
 myKeys =
       -- KB_GROUP Xmonad
-        [ ("M-S-p", spawn "xmonad --recompile && xmonad --restart")    -- Restarts xmonad
+        [ ("M-S-p", spawn "killall polybar && xmonad --recompile && xmonad --restart")    -- Restarts xmonad
         , ("M-S-q", io exitSuccess)              -- Quits xmonad
         , ("M-M1-n", spawn "thunar")
-        , ("M-M1-l", spawn "betterlockscreen -s blur")
-        , ("M-M1-s", spawn "flameshot gui")
         , ("M-M1-c", spawn "pavucontrol")
 
+-- NEW KEYBINDING FOR LAUNCHERS 
+        , ("M-x", spawn "~/.config/rofi/bin/powermenu")
+        , ("M-i", spawn "~/.config/rofi/bin/mpd")
+        , ("M-M1-s", spawn "~/.config/rofi/bin/screenshot")
+        , ("M-M1-l", spawn "betterlockscreen -s blur")
+
     -- Run Prompt
-        , ("M-S-<Return>", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher2.sh") -- Dmenu
+        , ("M-S-<Return>", spawn "rofi -show run -theme /home/lucifer/.config/rofi/launchers/Kde_krunner.rasi") -- Dmenu
     -- Run rofi 
-    --    , ("M-d", spawn "/home/lucifer/.config/rofi_themes/launcher/launcher.sh") -- Dmenu
-        , ("M-d", spawn "xfce4-appfinder") -- Dmenu
+        , ("M-d", spawn "/home/lucifer/.config/rofi/bin/launcher") -- Dmenu
     --
-        , ("M1-<Tab>", spawn "rofi -show window -theme /home/lucifer/.config/rofi_themes/window_switch/kde_krunner.rasi") -- Dmenu
+        , ("M1-<Tab>", spawn "rofi -show window -theme /home/lucifer/.config/rofi/default/launcher.rasi") -- Dmenu
     --
     -- Other Dmenu Prompts
     -- In Xmonad and many tiling window managers, M-p is the default keybinding to
@@ -394,7 +402,7 @@ myKeys =
         , ("M-p s", spawn "dm-websearch") -- search various search engines
 
     -- Useful programs to have a keybinding for launch
-        , ("M-x", spawn (myTerminal))
+        , ("M-<Return>", spawn (myTerminal))
         , ("M-M1-b", spawn (myBrowser ))
         , ("M-M1-h", spawn (myTerminal ++ " -e htop"))
 
@@ -403,7 +411,7 @@ myKeys =
         , ("M-S-a", killAll)   -- Kill all windows on current workspace
 
     -- Workspaces
-        , ("M-<Space>", nextScreen)  -- Switch focus to next monitor
+    , ("M-<Space>", nextScreen)  -- Switch focus to next monitor
         , ("M-S-.", shiftTo Next nonNSP >> moveTo Next nonNSP)       -- Shifts focused window to next ws
         , ("M-S-,", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
     
@@ -505,9 +513,9 @@ myKeys =
         , ("C-e a", spawn (myEmacs ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
 
     -- Multimedia Keys
-        , ("<XF86AudioPlay>", spawn ("playerctl play-pause"))
-        , ("<XF86AudioPrev>", spawn ("playerctl previous"))
-        , ("<XF86AudioNext>", spawn ("playerctl next"))
+        , ("<XF86AudioPlay>", spawn ("mpc toggle"))
+        , ("<XF86AudioPrev>", spawn ("mpc prev"))
+        , ("<XF86AudioNext>", spawn ("mpc next"))
         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle && exec notify-send Mute -t 500")
         , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
         , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
@@ -527,12 +535,12 @@ myKeys =
 main :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
-    xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
-    xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
+   -- xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
+   -- xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
     -- the xmonad, ya know...what the WM is named after!
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
-        , handleEventHook    = docksEventHook  
+        , handleEventHook    = docksEventHook  <+> ewmhDesktopsEventHook
                                -- Uncomment this line to enable fullscreen support on things like YouTube/Netflix.
                                -- This works perfect on SINGLE monitor systems. On multi-monitor systems,
                                -- it adds a border around the window if screen does not have focus. So, my solution
@@ -546,19 +554,20 @@ main = do
         , borderWidth        = myBorderWidth
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
-        , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
-              -- the following variables beginning with 'pp' are settings for xmobar.
-              { ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
-                            >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
-              , ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
-             -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
-              , ppVisible = xmobarColor "#b3afc2" "" . clickable              -- Visible but not current workspace
-              , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
-              , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  . clickable     -- Hidden workspaces (no windows)
-              , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
-              , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
-              , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
-        --      , ppExtras  = [windowCount]                                     -- # of windows current workspace
-              , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]                    -- order of things in xmobar
-              }
+        , logHook = return ()
+--        , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP 
+--              -- the following variables beginning with 'pp' are settings for xmobar.
+--              { --ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
+--                --            >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
+--              ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
+--             -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
+--              , ppVisible = xmobarColor "#b3afc2" "" . clickable              -- Visible but not current workspace
+--              , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
+--              , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  . clickable     -- Hidden workspaces (no windows)
+--              , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
+--              , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
+--              , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
+--        --      , ppExtras  = [windowCount]                                     -- # of windows current workspace
+--              , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]                    -- order of things in xmobar
+--              }
         } `additionalKeysP` myKeys

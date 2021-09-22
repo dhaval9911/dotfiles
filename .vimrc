@@ -99,15 +99,16 @@ let g:lightline = {
       \ 'colorscheme': 'codedark',
       \ }
 
-set termguicolors
+"set termguicolors
 colorscheme codedark 
 hi Normal ctermbg=259
+hi LineNr ctermbg=259
 "let airline_theme='fairyfloss' 
 "let g:airline_powerline_fonts = 1
 
 hi PmenuSel guibg=#98c379
 hi Pmenu guibg=#282c34
-set background=dark 
+"set background=dark 
 let g:python_highlight_all = 1
 "set completeopt-=preview
 

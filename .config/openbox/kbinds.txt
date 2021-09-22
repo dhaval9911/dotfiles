@@ -1,4 +1,4 @@
-2021-09-18	rc.xml KEYBINDS
+2021-09-19	rc.xml KEYBINDS
 -------------------------------
 
  0	W-1           				GoToDesktop
@@ -50,7 +50,7 @@
 46	W-f           				thunar
 47	W-t           				alacritty --config-file ~/.config/alacritty/fullscreen.yml
 48	W-Return      				alacritty
-49	W-w           				midori
+49	W-w           				brave
 50	W-n           				networkmanager_dmenu
 51	A-F1          				~/.config/rofi/bin/launcher
 52	W-m           				~/.config/rofi/bin/mpd

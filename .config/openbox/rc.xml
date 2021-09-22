@@ -19,8 +19,8 @@
     <primaryMonitor>Mouse</primaryMonitor>
   </placement>
   <theme>
-    <name>Nordic</name>
-    <titleLayout>LIMC</titleLayout>
+    <name>Adapta</name>
+    <titleLayout>MLC</titleLayout>
     <keepBorder>no</keepBorder>
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
@@ -83,9 +83,9 @@
   </resize>
   <margins>
     <top>0</top>
-    <bottom>15</bottom>
-    <left>15</left>
-    <right>15</right>
+    <bottom>10</bottom>
+    <left>10</left>
+    <right>10</right>
   </margins>
   <dock>
     <position>Bottom</position>
@@ -470,6 +470,11 @@
     <keybind key="C-A-l">
       <action name="Execute">
         <command>betterlockscreen --lock</command>
+      </action>
+    </keybind>
+    <keybind key="C-A-s">
+      <action name="Execute">
+        <command>betterlockscreen -s dim</command>
       </action>
     </keybind>
     <!-- Openbox -->
