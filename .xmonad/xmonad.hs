@@ -15,6 +15,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.MouseResize
 import XMonad.Actions.Promote
+import XMonad.Actions.SpawnOn
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
@@ -98,7 +99,7 @@ myEditor :: String
 myEditor = myTerminal ++ " -e nvim "    -- Sets vim as editor
 
 myBorderWidth :: Dimension
-myBorderWidth = 2           -- Sets border width for windows
+myBorderWidth = 1           -- Sets border width for windows
 
 myNormColor :: String
 myNormColor   = "#282c34"   -- Border color of normal windows
@@ -112,16 +113,10 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
    -- spawnOnce "lxsession &"
-    spawnOnce "compton &"
+  --  spawnOnce "compton &"
+    spawnOn "www" "brave"
+    spawnOn  ( myWorkspaces !! 1 ) "alacritty"
     spawnOnce "mpd &"
---    spawnOnce "volumeicon &"
-   -- spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
-   -- spawnOnce "conky -c /home/lucifer/.config/conky/Rock/.conkyrc2"
---    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0  --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
-    --spawnOnce "/usr/bin/emacs --daemon &" -- emacs daemon for the emacsclient
-    -- spawnOnce "kak -d -s mysession &"  -- kakoune daemon for better performance
-    -- spawnOnce "urxvtd -q -o -f &"      -- urxvt daemon for better performance
-    spawnOnce "/bin/zsh ~/.config/polybar/default/launch.sh "
   --  spawnOnce "xargs xwallpaper --stretch < ~/.xwallpaper"  -- set last saved with xwallpaper
     -- spawnOnce "/bin/ls ~/wallpapers | shuf -n 1 | xargs xwallpaper --stretch"  -- set random xwallpaper
     -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
@@ -217,6 +212,7 @@ mySpacing' i = spacingRaw True (Border i i i i) True (Border i i i i) True
 -- limitWindows n sets maximum number of windows displayed for layout.
 -- mySpacing n sets the gap size around the windows.
 tall     = renamed [Replace "tall"]
+           $ avoidStruts
            $ smartBorders
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
@@ -313,7 +309,7 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                                  ||| wideAccordion
 
 --myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-myWorkspaces = ["code", "www", "file", "doc", "vbox", "note", "vid", "chat", "misc"]
+myWorkspaces = [" code ", " www ", " file ", " doc ", " vbox ", " note ", " vid ", " chat ", " misc "]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
@@ -349,10 +345,8 @@ myManageHook = composeAll
      , title =? "File Operation Progress" --> doCenterFloat
      , title =? "Virtual Media Manager" --> doFloat
      , title =? "Host Network Manager" --> doFloat
-     , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
-     , className =? "brave-browser"   --> doShift ( myWorkspaces !! 1 )
-     , className =? "Brave-Browser"     --> doShift ( myWorkspaces !! 1 )
      , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
+     , className =? "Brave-browser"      --> doShift ( myWorkspaces !! 1 )
      , className =? "obs"            --> doShift ( myWorkspaces !! 8 )
      , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
      , className =? "pdf"   --> doShift ( myWorkspaces !! 3 ) 
@@ -367,7 +361,7 @@ myManageHook = composeAll
 myKeys :: [(String, X ())]
 myKeys =
       -- KB_GROUP Xmonad
-        [ ("M-S-p", spawn "killall polybar && xmonad --recompile && xmonad --restart")    -- Restarts xmonad
+        [ ("M-S-p", spawn "xmonad --recompile && xmonad --restart")    -- Restarts xmonad
         , ("M-S-q", io exitSuccess)              -- Quits xmonad
         , ("M-M1-n", spawn "thunar")
         , ("M-M1-c", spawn "pavucontrol")
@@ -531,16 +525,23 @@ myKeys =
     -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
                 nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
+
+--spawnToWorkspace :: String -> String -> X ()
+--spawnToWorkspace program workspace  = spawn program  >> ( windows $ W.greedyView workspace )
+--
+
+
+
 -- END_KEYS
 main :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
-   -- xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
-   -- xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
+    xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
+    xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
     -- the xmonad, ya know...what the WM is named after!
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
-        , handleEventHook    = docksEventHook  <+> ewmhDesktopsEventHook
+        , handleEventHook    = docksEventHook
                                -- Uncomment this line to enable fullscreen support on things like YouTube/Netflix.
                                -- This works perfect on SINGLE monitor systems. On multi-monitor systems,
                                -- it adds a border around the window if screen does not have focus. So, my solution
@@ -554,20 +555,18 @@ main = do
         , borderWidth        = myBorderWidth
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
-        , logHook = return ()
---        , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP 
---              -- the following variables beginning with 'pp' are settings for xmobar.
---              { --ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
---                --            >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
---              ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
---             -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
---              , ppVisible = xmobarColor "#b3afc2" "" . clickable              -- Visible but not current workspace
---              , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
---              , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  . clickable     -- Hidden workspaces (no windows)
---              , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
---              , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
---              , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
---        --      , ppExtras  = [windowCount]                                     -- # of windows current workspace
---              , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]                    -- order of things in xmobar
---              }
+        , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
+              -- the following variables beginning with 'pp' are settings for xmobar.
+              { ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
+                            >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
+             , ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
+             -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
+              , ppVisible = xmobarColor "#b3afc2" "" . clickable              -- Visible but not current workspace
+              , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
+              , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  . clickable     -- Hidden workspaces (no windows)
+              , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
+              , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
+              , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
+              , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]                    -- order of things in xmobar
+              }
         } `additionalKeysP` myKeys

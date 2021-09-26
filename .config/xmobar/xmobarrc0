@@ -24,7 +24,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=t
 --  <fc=#666666>|</fc>  <fc=#ecbe7b> <action=`/home/lucifer/.config/rofi/applets/android/screenshot.sh`>%cpu%</action> </fc> 
              --       , Run Memory ["-t", "<fn=2>\xf233</fn>  mem: <used>M (<usedratio>%)"] 20
                     , Run Com  "/home/lucifer/.config/i3/scripts/memory" [] "memory" 20
-                    , Run DiskU [("/", "<fn=2>\xf0c7</fn>  hdd: <free> free")] [] 60
+                    , Run DiskU [("/", "<fn=2>\xf0c7</fn>  ssd: <free> free")] [] 60
                     , Run Com  "/home/lucifer/.config/i3/scripts/battery" [] "battery" 20 
             --        , Run Com "/home/lucifer/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                     , Run Com "uname" ["-r"] "" 3600

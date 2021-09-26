@@ -121,3 +121,4 @@ alias gp='git push origin master'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias aurup='sudo pacman -Syyu && yay -Syyu'
 alias xc='vim ~/.xmonad/xmonad.hs'
+alias pc="cd ~/.config/polybar/default/"
