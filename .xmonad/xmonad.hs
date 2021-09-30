@@ -19,11 +19,13 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
+import XMonad.Operations
 import qualified XMonad.Actions.Search as S
     -- Data
 import Data.Char (isSpace, toUpper)
 import Data.Maybe (fromJust)
 import Data.Monoid
+import Data.Ratio
 import Data.Maybe (isJust)
 import Data.Tree
 import qualified Data.Map as M
@@ -33,7 +35,7 @@ import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, s
 import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
 import XMonad.Hooks.ManageDocks 
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..), SetStruts)
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat,doRectFloat,isDialog )
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WorkspaceHistory
@@ -59,6 +61,7 @@ import XMonad.Layout.ShowWName
 import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
 import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowNavigation
 import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
@@ -174,8 +177,8 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
                 , NS "calculator" spawnCalc findCalc manageCalc
                 ]
   where
-    spawnTerm  = alacritty ++ " -t scratchpad"
-    findTerm   = title =? "scratchpad"
+    spawnTerm  = alacritty ++ " --class=scratchpad"
+    findTerm   = resource =? "scratchpad"
     manageTerm = customFloating $ W.RationalRect l t w h
                where
                  h = 0.9
@@ -314,45 +317,51 @@ myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y 
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
     where i = fromJust $ M.lookup ws myWorkspaceIndices
-
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
      -- 'doFloat' forces a window to float.  Useful for dialog boxes and such.
      -- using 'doShift ( myWorkspaces !! 7)' sends program to workspace 8!
      -- I'm doing it this way because otherwise I would have to write out the full
      -- name of my workspaces and the names would be very long if using clickable workspaces.
-     [ className =? "confirm"            --> doFloat
-     , className =? "file_progress"      --> doCenterFloat
-     , className =? "Thunar"      --> hasBorder False
-     , className =? "Thunar"      --> doCenterFloat 
-     , className =? "viewnior"      --> doCenterFloat
-     , className =? "Viewnior"      --> doCenterFloat
-     , className =? "xfce4-appfinder"      --> doFloat
-     , className =? "nitrogen"   -->    doCenterFloat   
-     , className =? "Nitrogen"   -->    doCenterFloat   
-     , className =? "Xfce4-appfinder"      --> doFloat
-     , className =? "dialog"             --> doCenterFloat
-     , className =? "download"           --> doCenterFloat
-     , className =? "error"              --> doCenterFloat
-     , className =? "Trayer"              --> doFloat
-     , className =? "Gimp"               --> doFloat
-     , className =? "notification"       --> doFloat
-     , className =? "rofi"       --> doCenterFloat
-     , className =? "pinentry-gtk-2"     --> doFloat
-     , className =? "splash"             --> doFloat
-     , className =? "Yad"          --> doCenterFloat
-     , className =? "toolbar"         --> doFloat
-     , title =? "File Operation Progress" --> doCenterFloat
-     , title =? "Virtual Media Manager" --> doFloat
-     , title =? "Host Network Manager" --> doFloat
-     , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
-     , className =? "Brave-browser"      --> doShift ( myWorkspaces !! 1 )
-     , className =? "obs"            --> doShift ( myWorkspaces !! 8 )
-     , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
-     , className =? "pdf"   --> doShift ( myWorkspaces !! 3 ) 
-     , className =? "Notion" --> doShift  ( myWorkspaces !! 5 )
-     , className =? "Zathura" --> doShift  ( myWorkspaces !! 3 )
-     , className =? "vlc" --> doShift  ( myWorkspaces !! 6 )
+     [ className =? "confirm"                   --> doFloat
+     , isDialog                                 --> doCenterFloat
+     , isDialog                                 --> hasBorder False 
+     , title =? "File Operation Progress"       --> doCenterFloat
+     , className =? "Thunar"                    --> hasBorder False
+     , className =? "Thunar"                    --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "Org.gnome.Nautilus"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "viewnior"                  --> doCenterFloat
+     , className =? "file_progress"             --> doCenterFloat
+     , className =? "Viewnior"                  --> doCenterFloat
+     , className =? "xfce4-appfinder"           --> doFloat
+     , className =? "nitrogen"                  --> doCenterFloat   
+     , className =? "Nitrogen"                  --> doCenterFloat   
+     , className =? "Xfce4-appfinder"           --> doFloat
+     , className =? "dialog"                    --> doCenterFloat
+     , className =? "download"                  --> doCenterFloat
+     , className =? "error"                     --> doCenterFloat
+     , className =? "Trayer"                    --> doFloat
+     , className =? "Gimp"                      --> doFloat
+     , className =? "notification"              --> doFloat
+     , className =? "scratchpad"                --> doFloat
+     , className =? "rofi"                      --> doCenterFloat
+     , className =? "Xfce-polkit"               --> doCenterFloat
+     , className =? "pinentry-gtk-2"            --> doFloat
+     , className =? "splash"                    --> doFloat
+     , className =? "Yad"                       --> doCenterFloat
+     , className =? "toolbar"                   --> doFloat
+     , title =? "Virtual Media Manager"         --> doFloat
+     , title =? "Host Network Manager"          --> doFloat
+     , className =? "mpv"                       --> doShift ( myWorkspaces !! 7 )
+     , className =? "Brave-browser"             --> doShift ( myWorkspaces !! 1 )
+     , className =? "obs"                       --> doShift ( myWorkspaces !! 8 )
+     , className =? "VirtualBox Manager"        --> doShift  ( myWorkspaces !! 4 )
+     , className =? "Vmware"        --> doShift  ( myWorkspaces !! 4 )
+     , className =? "VirtualBox Manager"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "vmware"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "pdf"                       --> doShift ( myWorkspaces !! 3 ) 
+     , className =? "Notion"                    --> doShift  ( myWorkspaces !! 5 )
+     , className =? "Zathura"                   --> doShift  ( myWorkspaces !! 3 )
      , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
@@ -369,6 +378,7 @@ myKeys =
 -- NEW KEYBINDING FOR LAUNCHERS 
         , ("M-x", spawn "~/.config/rofi/bin/powermenu")
         , ("M-i", spawn "~/.config/rofi/bin/mpd")
+        , ("M-S-b", spawn "~/.config/rofi/bin/network")
         , ("M-M1-s", spawn "~/.config/rofi/bin/screenshot")
         , ("M-M1-l", spawn "betterlockscreen -s blur")
 
@@ -401,7 +411,7 @@ myKeys =
         , ("M-M1-h", spawn (myTerminal ++ " -e htop"))
 
     -- Kill windows
-        , ("M-q", kill1)     -- Kill the currently focused client
+        , ("M-q",   kill1)     -- Kill the currently focused client
         , ("M-S-a", killAll)   -- Kill all windows on current workspace
 
     -- Workspaces
@@ -412,6 +422,7 @@ myKeys =
     --Swiching between workspaces prev and next
         , ("M-n" , nextWS)
         , ("M-m" , prevWS)
+
     -- Floating windows
         , ("M-e", sendMessage (T.Toggle "floats")) -- Toggles my 'floats' layout
         , ("M-t", withFocused $ windows . W.sink)  -- Push floating window back to tile
@@ -439,11 +450,10 @@ myKeys =
         , ("M-C-<Tab>", rotAllDown)       -- Rotate all the windows in the current stack
 
     -- Layouts
-        , ("M-<Tab>", sendMessage NextLayout)           -- Switch to next layout
-        , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
-        , ("M-b", sendMessage ToggleStruts)
-        , ("M-S-b", sendMessage $  SetStruts [U,L] [minBound .. maxBound])
-        , ("M-M1-g",  sendMessage (MT.Toggle NOBORDERS ))
+        , ("M-<Tab>", sendMessage NextLayout)                                  -- Switch to next layout
+        , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)  -- Toggles noborder/full
+        , ("M-b", sendMessage ToggleStruts)                                    -- Show/Hide xmobar
+        , ("M-M1-g",  sendMessage (MT.Toggle NOBORDERS ))                      -- Remove Borders From Windows
 
     -- Increase/decrease windows in the master pane or the stack
         , ("M-S-<Up>", sendMessage (IncMasterN 1))      -- Increase # of clients master pane
@@ -464,7 +474,7 @@ myKeys =
         , ("M-C-k", sendMessage $ pullGroup U)
         , ("M-C-j", sendMessage $ pullGroup D)
         , ("M-w", withFocused (sendMessage . MergeAll))
-        -- , ("M-C-u", withFocused (sendMessage . UnMerge))
+      --, ("M-C-u", withFocused (sendMessage . UnMerge))
         , ("M-C-/", withFocused (sendMessage . UnMergeAll))
         , ("M-C-.", onGroup W.focusUp')    -- Switch focus to next tab
         , ("M-C-,", onGroup W.focusDown')  -- Switch focus to prev tab
@@ -525,12 +535,6 @@ myKeys =
     -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
                 nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
-
---spawnToWorkspace :: String -> String -> X ()
---spawnToWorkspace program workspace  = spawn program  >> ( windows $ W.greedyView workspace )
---
-
-
 
 -- END_KEYS
 main :: IO ()

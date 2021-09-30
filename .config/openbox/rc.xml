@@ -6,7 +6,7 @@
   </resistance>
   <focus>
     <focusNew>yes</focusNew>
-    <followMouse>yes</followMouse>
+    <followMouse>no</followMouse>
     <focusLast>yes</focusLast>
     <underMouse>no</underMouse>
     <focusDelay>200</focusDelay>
@@ -19,42 +19,42 @@
     <primaryMonitor>Mouse</primaryMonitor>
   </placement>
   <theme>
-    <name>Adapta</name>
-    <titleLayout>MLC</titleLayout>
+    <name>Windows-10</name>
+    <titleLayout>NLIMC</titleLayout>
     <keepBorder>no</keepBorder>
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
-      <name>Noto Sans</name>
+      <name>JetBrains Mono</name>
       <size>9</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveWindow">
-      <name>Noto Sans</name>
+      <name>JetBrains Mono</name>
       <size>9</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="MenuHeader">
-      <name>Noto Sans</name>
+      <name>JetBrains Mono</name>
       <size>9</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
     <font place="MenuItem">
-      <name>Noto Sans</name>
+      <name>JetBrains Mono</name>
       <size>9</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="ActiveOnScreenDisplay">
-      <name>Noto Sans</name>
+      <name>JetBrains Mono</name>
       <size>9</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveOnScreenDisplay">
-      <name>Noto Sans</name>
+      <name>JetBrains Mono</name>
       <size>9</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
@@ -83,9 +83,9 @@
   </resize>
   <margins>
     <top>0</top>
-    <bottom>10</bottom>
-    <left>10</left>
-    <right>10</right>
+    <bottom>0</bottom>
+    <left>0</left>
+    <right>0</right>
   </margins>
   <dock>
     <position>Bottom</position>
@@ -404,7 +404,7 @@
     </keybind>
     <keybind key="W-w">
       <action name="Execute">
-        <command>brave</command>
+        <command>midori</command>
       </action>
     </keybind>
     <keybind key="W-n">
@@ -470,11 +470,6 @@
     <keybind key="C-A-l">
       <action name="Execute">
         <command>betterlockscreen --lock</command>
-      </action>
-    </keybind>
-    <keybind key="C-A-s">
-      <action name="Execute">
-        <command>betterlockscreen -s dim</command>
       </action>
     </keybind>
     <!-- Openbox -->
@@ -863,7 +858,7 @@
     </context>
   </mouse>
   <menu>
-    <file>menu.xml</file>
+    <file>menu-icons.xml</file>
     <hideDelay>400</hideDelay>
     <middle>no</middle>
     <submenuShowDelay>100</submenuShowDelay>
