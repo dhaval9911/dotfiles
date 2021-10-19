@@ -4,11 +4,7 @@ import System.Directory
 import System.IO (hPutStrLn)
 import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
-
-
-
--- soemhtins
-    -- Actions
+-- Actions
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS (Direction1D(..), moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
 import XMonad.Actions.CycleWS
@@ -91,6 +87,9 @@ myBrowser :: String
 myBrowser = "brave"  -- Sets qutebrowser as browser
 
 
+rofi_launcher = spawn "~/.config/openbox/rofi/bin/launcher"
+rofi_runner = spawn  "~/.config/openbox/rofi/bin/runner"
+
 gplayer :: String
 gplayer = "playmymusic"
 
@@ -99,7 +98,7 @@ myEmacs :: String
 myEmacs = "emacsclient -c -a 'emacs' "  -- Makes emacs keybindings easier to type
 
 myEditor :: String
-myEditor = myTerminal ++ " -e nvim "    -- Sets vim as editor
+myEditor = myTerminal ++ " -e nvim "    -- Sets nvim as editor
 
 myBorderWidth :: Dimension
 myBorderWidth = 1           -- Sets border width for windows
@@ -120,9 +119,12 @@ myStartupHook = do
     spawnOn "www" "brave"
     spawnOn  ( myWorkspaces !! 1 ) "alacritty"
     spawnOnce "mpd &"
+    spawnOnce "mpd &"
+    spawn "bash ~/.xmonad/bin/startup.sh"
   --  spawnOnce "xargs xwallpaper --stretch < ~/.xwallpaper"  -- set last saved with xwallpaper
     -- spawnOnce "/bin/ls ~/wallpapers | shuf -n 1 | xargs xwallpaper --stretch"  -- set random xwallpaper
     -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
+   -- spawnOnce "picom &"
     -- spawnOnce "feh --randomize --bg-fill ~/wallpapers/*"  -- feh set random wallpaper
    -- spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
     setWMName "LG3D"
@@ -376,18 +378,16 @@ myKeys =
         , ("M-M1-c", spawn "pavucontrol")
 
 -- NEW KEYBINDING FOR LAUNCHERS 
-        , ("M-x", spawn "~/.config/rofi/bin/powermenu")
-        , ("M-i", spawn "~/.config/rofi/bin/mpd")
-        , ("M-S-b", spawn "~/.config/rofi/bin/network")
-        , ("M-M1-s", spawn "~/.config/rofi/bin/screenshot")
+        , ("M-x", spawn "~/.config/openbox/rofi/bin/powermenu")
+        , ("M-i", spawn "~/.config/openbox/rofi/bin/mpd")
+        , ("M-S-b", spawn "~/.config/openbox/rofi/bin/network")
+        , ("M-M1-s", spawn "~/.config/openbox/rofi/bin/screenshot")
         , ("M-M1-l", spawn "betterlockscreen -s blur")
-
     -- Run Prompt
-        , ("M-S-<Return>", spawn "rofi -show run -theme /home/lucifer/.config/rofi/launchers/Kde_krunner.rasi") -- Dmenu
-    -- Run rofi 
-        , ("M-d", spawn "/home/lucifer/.config/rofi/bin/launcher") -- Dmenu
-    --
-        , ("M1-<Tab>", spawn "rofi -show window -theme /home/lucifer/.config/rofi/default/launcher.rasi") -- Dmenu
+        , ("M1-<F1>", rofi_launcher)
+    -- Runner 
+          , ("M-r", rofi_runner)
+        ,("M1-<Tab>", spawn "rofi -show window -theme /home/lucifer/.config/openbox/rofi/default/launcher.rasi") -- Dmenu
     --
     -- Other Dmenu Prompts
     -- In Xmonad and many tiling window managers, M-p is the default keybinding to
@@ -565,7 +565,7 @@ main = do
                             >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
              , ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
              -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
-              , ppVisible = xmobarColor "#b3afc2" "" . clickable              -- Visible but not current workspace
+              , ppVisible = xmobarColor "#c792ea" "" . clickable              -- Visible but not current workspace
               , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
               , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  . clickable     -- Hidden workspaces (no windows)
               , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window

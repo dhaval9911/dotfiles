@@ -22,18 +22,24 @@ ksuperkey -e 'Super_R=Alt_L|F1' &
 xsetroot -cursor_name left_ptr
 
 # Restore wallpaper
-hsetroot -cover ~/.xmonad/wallpaper.png
-
-# Lauch polybar
-polybar main -c ~/.xmonad/polybar/config.ini &
+nitrogen --restore &
 
 # Lauch compositor
-compton --config ~/.xmonad/compton.conf &
+picom &
 
 # Lauch notification daemon
 if [[ `pidof dunst` ]]; then
 	pkill dunst
 fi
+
+#restore multimonitor positions
+bash ~/.screenlayout/hdmi-left.sh &
+
+#touchpad gestures
+libinput-gestures &
+
+
+
 
 dunst \
 -geom "280x50-10+40" -frame_width "1" -font "Iosevka 10" \
