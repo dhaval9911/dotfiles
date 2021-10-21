@@ -8,6 +8,7 @@ for _prs in "${_ps[@]}"; do
 	fi
 done
 
+
 # polkit agent
 /usr/lib/xfce-polkit/xfce-polkit &
 
@@ -20,6 +21,9 @@ ksuperkey -e 'Super_R=Alt_L|F1' &
 
 # Fix mouse cursor
 xsetroot -cursor_name left_ptr
+
+#conky
+conky -c ~/.config/conky/new.conkyrc &
 
 # Restore wallpaper
 nitrogen --restore &
@@ -40,12 +44,13 @@ libinput-gestures &
 
 
 
-
 dunst \
 -geom "280x50-10+40" -frame_width "1" -font "Iosevka 10" \
 -lb "#090A0B" -lf "#E6DFE0" -lfr "#E6DFE0" \
 -nb "#090A0B" -nf "#E6DFE0" -nfr "#E6DFE0" \
 -cb "#090A0B" -cf "#BB553F" -cfr "#BB553F" &
 
+
+export LC_ALL=en_US.UTF-8
 # Start mpd
 exec mpd &

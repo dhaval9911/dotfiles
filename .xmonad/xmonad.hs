@@ -325,46 +325,49 @@ myManageHook = composeAll
      -- using 'doShift ( myWorkspaces !! 7)' sends program to workspace 8!
      -- I'm doing it this way because otherwise I would have to write out the full
      -- name of my workspaces and the names would be very long if using clickable workspaces.
-     [ className =? "confirm"                   --> doFloat
-     , isDialog                                 --> doCenterFloat
-     , isDialog                                 --> hasBorder False 
-     , title =? "File Operation Progress"       --> doCenterFloat
-     , className =? "Thunar"                    --> hasBorder False
+     [
+     -- Applications
+       className =? "Thunar"                    --> hasBorder False
      , className =? "Thunar"                    --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "Brave-browser"             --> doShift ( myWorkspaces !! 1 )
+     , className =? "obs"                       --> doShift ( myWorkspaces !! 8 )
+     , className =? "VirtualBox Manager"        --> doShift  ( myWorkspaces !! 4 )
+     , className =? "Vmware"                    --> doShift  ( myWorkspaces !! 4 )
+     , className =? "VirtualBox Manager"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "vmware"                    --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "pdf"                       --> doShift ( myWorkspaces !! 3 ) 
+     , className =? "Notion"                    --> doShift  ( myWorkspaces !! 5 )
+     , className =? "Zathura"                   --> doShift  ( myWorkspaces !! 3 )
      , className =? "Org.gnome.Nautilus"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
      , className =? "viewnior"                  --> doCenterFloat
-     , className =? "file_progress"             --> doCenterFloat
      , className =? "Viewnior"                  --> doCenterFloat
+     , title =? "Virtual Media Manager"         --> doFloat
+     , title =? "Host Network Manager"          --> doFloat
      , className =? "xfce4-appfinder"           --> doFloat
      , className =? "nitrogen"                  --> doCenterFloat   
      , className =? "Nitrogen"                  --> doCenterFloat   
      , className =? "Xfce4-appfinder"           --> doFloat
-     , className =? "dialog"                    --> doCenterFloat
-     , className =? "download"                  --> doCenterFloat
-     , className =? "error"                     --> doCenterFloat
      , className =? "Trayer"                    --> doFloat
      , className =? "Gimp"                      --> doFloat
-     , className =? "notification"              --> doFloat
-     , className =? "scratchpad"                --> doFloat
+     , className =? "Music"                     --> doCenterFloat
      , className =? "rofi"                      --> doCenterFloat
-     , className =? "Xfce-polkit"               --> doCenterFloat
      , className =? "pinentry-gtk-2"            --> doFloat
      , className =? "splash"                    --> doFloat
      , className =? "Yad"                       --> doCenterFloat
+     -- Utilities 
+     , className =? "download"                  --> doCenterFloat
+     , className =? "confirm"                   --> doFloat
+     , className =? "Xfce-polkit"               --> doCenterFloat
+     , className =? "notification"              --> doFloat
+     , className =? "error"                     --> doCenterFloat
+     , className =? "Pavucontrol"               --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
+     , className =? "Pavucontrol"               --> doShift ( myWorkspaces !! 8 )
+     , className =? "dialog"                    --> doCenterFloat
+     , className =? "file_progress"             --> doCenterFloat
+     , className =? "scratchpad"                --> doFloat
+     , className =? "Conky"                     --> doIgnore 
      , className =? "toolbar"                   --> doFloat
-     , title =? "Virtual Media Manager"         --> doFloat
-     , title =? "Host Network Manager"          --> doFloat
      , className =? "mpv"                       --> doShift ( myWorkspaces !! 7 )
-     , className =? "Brave-browser"             --> doShift ( myWorkspaces !! 1 )
-     , className =? "obs"                       --> doShift ( myWorkspaces !! 8 )
-     , className =? "VirtualBox Manager"        --> doShift  ( myWorkspaces !! 4 )
-     , className =? "Vmware"        --> doShift  ( myWorkspaces !! 4 )
-     , className =? "VirtualBox Manager"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
-     , className =? "vmware"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
-     , className =? "pdf"                       --> doShift ( myWorkspaces !! 3 ) 
-     , className =? "Notion"                    --> doShift  ( myWorkspaces !! 5 )
-     , className =? "Zathura"                   --> doShift  ( myWorkspaces !! 3 )
-     , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
 
@@ -378,7 +381,7 @@ myKeys =
         , ("M-M1-c", spawn "pavucontrol")
 
 -- NEW KEYBINDING FOR LAUNCHERS 
-        , ("M-x", spawn "~/.config/openbox/rofi/bin/powermenu")
+        , ("M-x", spawn "~/.xmonad/bin/powermenu")
         , ("M-i", spawn "~/.config/openbox/rofi/bin/mpd")
         , ("M-S-b", spawn "~/.config/openbox/rofi/bin/network")
         , ("M-M1-s", spawn "~/.config/openbox/rofi/bin/screenshot")
@@ -392,18 +395,18 @@ myKeys =
     -- Other Dmenu Prompts
     -- In Xmonad and many tiling window managers, M-p is the default keybinding to
     -- launch dmenu_run, so I've decided to use M-p plus KEY for these dmenu scripts.
-        , ("M-p a", spawn "dm-sounds")    -- choose an ambient background
-        , ("M-p b", spawn "dm-setbg")     -- set a background
-        , ("M-p c", spawn "dm-colpick")   -- pick color from our scheme
-        , ("M-p e", spawn "dm-confedit")  -- edit config files
-        , ("M-p i", spawn "dm-maim")      -- screenshots (images)
-        , ("M-p k", spawn "dm-kill")      -- kill processes
-        , ("M-p m", spawn "dm-man")       -- manpages p
-        , ("M-p o", spawn "dm-bookman")   -- qutebrowser bookmarks/history
-        , ("M-p p", spawn "passmenu")     -- passmenu
-        , ("M-p q", spawn "dm-logout")    -- logout menu
-        , ("M-p r", spawn "dm-reddit")    -- reddio (a reddit viewer)
-        , ("M-p s", spawn "dm-websearch") -- search various search engines
+        , ("C-e a", spawn "/usr/bin/dm-sounds")    -- choose an ambient background
+        , ("C-e b", spawn "/usr/bin/dm-setbg")     -- set a background
+        , ("C-e c", spawn "/usr/bin/dm-colpick")   -- pick color from our scheme
+        , ("C-e e", spawn "/usr/bin/dm-confedit")  -- edit config files
+        , ("C-e i", spawn "/usr/bin/dm-maim")      -- screenshots (images)
+        , ("C-e k", spawn "/usr/bin/dm-kill")      -- kill processes
+        , ("C-e m", spawn "/usr/bin/dm-man")       -- manpages p
+        , ("C-e o", spawn "/usr/bin/dm-bookman")   -- qutebrowser bookmarks/history
+        , ("C-e p", spawn "/usr/bin/passmenu")     -- passmenu
+        , ("C-e q", spawn "/usr/bin/dm-logout")    -- logout menu
+        , ("C-e r", spawn "/usr/bin/dm-reddit")    -- reddio (a reddit viewer)
+        , ("C-e s", spawn "/usr/bin/dm-websearch") -- search various search engines
 
     -- Useful programs to have a keybinding for launch
         , ("M-<Return>", spawn (myTerminal))
@@ -499,38 +502,34 @@ myKeys =
         , ("M-u m", spawn "mocp --previous")
         , ("M-u <Space>", spawn "mocp --toggle-pause")
 
-    -- Emacs (CTRL-e followed by a key)
-        -- , ("C-e e", spawn myEmacs)                 -- start emacs
-        , ("C-e e", spawn (myEmacs ++ ("--eval '(dashboard-refresh-buffer)'")))   -- emacs dashboard
-        , ("C-e b", spawn (myEmacs ++ ("--eval '(ibuffer)'")))   -- list buffers
-        , ("C-e d", spawn (myEmacs ++ ("--eval '(dired nil)'"))) -- dired
-        , ("C-e i", spawn (myEmacs ++ ("--eval '(erc)'")))       -- erc irc client
-        , ("C-e m", spawn (myEmacs ++ ("--eval '(mu4e)'")))      -- mu4e email
-        , ("C-e n", spawn (myEmacs ++ ("--eval '(elfeed)'")))    -- elfeed rss
-        , ("C-e s", spawn (myEmacs ++ ("--eval '(eshell)'")))    -- eshell
-        , ("C-e t", spawn (myEmacs ++ ("--eval '(mastodon)'")))  -- mastodon.el
-        -- , ("C-e v", spawn (myEmacs ++ ("--eval '(vterm nil)'"))) -- vterm if on GNU Emacs
-        , ("C-e v", spawn (myEmacs ++ ("--eval '(+vterm/here nil)'"))) -- vterm if on Doom Emacs
-        -- , ("C-e w", spawn (myEmacs ++ ("--eval '(eww \"distrotube.com\")'"))) -- eww browser if on GNU Emacs
-        , ("C-e w", spawn (myEmacs ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'"))) -- eww browser if on Doom Emacs
-        -- emms is an emacs audio player. I set it to auto start playing in a specific directory.
-        , ("C-e a", spawn (myEmacs ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
+----    -- Emacs (CTRL-e followed by a key)
+ --       -- , ("C-e e", spawn myEmacs)                 -- start emacs
+ --       , ("C-e e", spawn (myEmacs ++ ("--eval '(dashboard-refresh-buffer)'")))   -- emacs dashboard
+ --       , ("C-e b", spawn (myEmacs ++ ("--eval '(ibuffer)'")))   -- list buffers
+ --       , ("C-e d", spawn (myEmacs ++ ("--eval '(dired nil)'"))) -- dired
+ --       , ("C-e i", spawn (myEmacs ++ ("--eval '(erc)'")))       -- erc irc client
+ --       , ("C-e m", spawn (myEmacs ++ ("--eval '(mu4e)'")))      -- mu4e email
+ --       , ("C-e n", spawn (myEmacs ++ ("--eval '(elfeed)'")))    -- elfeed rss
+ --       , ("C-e s", spawn (myEmacs ++ ("--eval '(eshell)'")))    -- eshell
+ --       , ("C-e t", spawn (myEmacs ++ ("--eval '(mastodon)'")))  -- mastodon.el
+ --       -- , ("C-e v", spawn (myEmacs ++ ("--eval '(vterm nil)'"))) -- vterm if on GNU Emacs
+ --       , ("C-e v", spawn (myEmacs ++ ("--eval '(+vterm/here nil)'"))) -- vterm if on Doom Emacs
+ --       -- , ("C-e w", spawn (myEmacs ++ ("--eval '(eww \"distrotube.com\")'"))) -- eww browser if on GNU Emacs
+ --       , ("C-e w", spawn (myEmacs ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'"))) -- eww browser if on Doom Emacs
+ --       -- emms is an emacs audio player. I set it to auto start playing in a specific directory.
+ --       , ("C-e a", spawn (myEmacs ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
 
     -- Multimedia Keys
         , ("<XF86AudioPlay>", spawn ("mpc toggle"))
         , ("<XF86AudioPrev>", spawn ("mpc prev"))
         , ("<XF86AudioNext>", spawn ("mpc next"))
-        , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle && exec notify-send Mute -t 500")
-        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
-        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send Volume:$(pactl list sinks | grep Volume | awk '{print $3}'  | head -n 1 | cut -c1-2) -t 500")
-        , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10 && notify-send Brightness:$(xbacklight | cut -f1 -d '.')  -t 500")
-        , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10 && notify-send Brightness:$(xbacklight | cut -f1 -d '.') -t 500")
-        , ("<XF86HomePage>", spawn "qutebrowser https://www.youtube.com/c/DistroTube")
+        , ("<XF86AudioMute>", spawn "~/.xmonad/bin/volume --toggle")
+        , ("<XF86AudioRaiseVolume>", spawn "~/.xmonad/bin/volume --inc")
+        , ("<XF86AudioLowerVolume>", spawn "~/.xmonad/bin/volume --dec")
+        , ("<XF86MonBrightnessUp>", spawn "~/.xmonad/bin/brightness --inc")
+        , ("<XF86MonBrightnessDown>", spawn "~/.xmonad/bin/brightness --dec")
         , ("<XF86Search>", spawn "dmsearch")
-        , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))
-        , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
-        , ("<XF86Eject>", spawn "toggleeject")
-        , ("<Print>", spawn "dmscrot")
+        , ("<Print>", spawn "~/.xmonad/bin/takeshot --area")
         ]
     -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
@@ -563,7 +562,7 @@ main = do
               -- the following variables beginning with 'pp' are settings for xmobar.
               { ppOutput = \x -> hPutStrLn xmproc0 x                          -- xmobar on monitor 1
                             >> hPutStrLn xmproc1 x                          -- xmobar on monitor 2
-             , ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
+              , ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
              -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
               , ppVisible = xmobarColor "#c792ea" "" . clickable              -- Visible but not current workspace
               , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
