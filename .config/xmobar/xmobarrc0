@@ -27,11 +27,12 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=t
                     , Run DiskU [("/", "<fn=2>\xf0c7</fn>  ssd: <free> free")] [] 60
                     , Run Com  "/home/lucifer/.config/i3/scripts/battery" [] "battery" 20 
             --        , Run Com "/home/lucifer/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
-                    , Run Com "uname" ["-r"] "" 3600
+                     , Run Volume "default" "Master" [] 10
+                    --, Run Com "uname" ["-r"] "" 3600
                     , Run UnsafeStdinReader
                  ]
        , sepChar = "%" 
        , alignSep = "}{"
-      template = " %UnsafeStdinReader% }{<fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#b3afc2> <fc=#b3afc2><fn=3></fn> <action=`xfce4-terminal -e htop`>%uname%</action> </fc> </box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#ff6c6b> <fn=1> </fn> <fc=#ff6c6b><action=`xfce4-terminal -e htop`>%memory%</action></fc> </box> <fc=#666666>|</fc> <box type=Bottom width=2 mb=2 color=#51afef> <fc=#51afef> <action=`thunar`>%disku%</action></fc> </box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#98be65><fc=#98be65> <action=`/home/lucifer/.config/rofi/applets/applets/network.sh`>%wlan0%</action> </fc> </box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2> <action=`/home/lucifer/.config/rofi/applets/applets/battery.sh`>%battery%</action></box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#46d9ff><fc=#46d9ff><action=`/home/lucifer/.config/rofi/applets/applets/time.sh`> %date%</action> </fc> </box> "
+      template = " %UnsafeStdinReader% }{<fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#b3afc2> <fc=#b3afc2><fn=3></fn> <action=`xfce4-terminal -e htop`>%default:Master%</action> </fc> </box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#ff6c6b> <fn=1> </fn> <fc=#ff6c6b><action=`xfce4-terminal -e htop`>%memory%</action></fc> </box> <fc=#666666>|</fc> <box type=Bottom width=2 mb=2 color=#51afef> <fc=#51afef> <action=`thunar`>%disku%</action></fc> </box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#98be65><fc=#98be65> <action=`/home/lucifer/.config/rofi/applets/applets/network.sh`>%wlan0%</action> </fc> </box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2> <action=`/home/lucifer/.config/rofi/applets/applets/battery.sh`>%battery%</action></box> <fc=#666666>|</fc>  <box type=Bottom width=2 mb=2 color=#46d9ff><fc=#46d9ff><action=`/home/lucifer/.config/rofi/applets/applets/time.sh`> %date%</action> </fc> </box> "
        }
 

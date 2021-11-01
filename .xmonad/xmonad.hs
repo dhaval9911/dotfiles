@@ -338,7 +338,6 @@ myManageHook = composeAll
      , className =? "pdf"                       --> doShift ( myWorkspaces !! 3 ) 
      , className =? "Notion"                    --> doShift  ( myWorkspaces !! 5 )
      , className =? "Zathura"                   --> doShift  ( myWorkspaces !! 3 )
-     , className =? "Org.gnome.Nautilus"        --> doRectFloat (W.RationalRect 0.05 0.07 0.9 0.9)
      , className =? "viewnior"                  --> doCenterFloat
      , className =? "Viewnior"                  --> doCenterFloat
      , title =? "Virtual Media Manager"         --> doFloat
@@ -565,7 +564,7 @@ main = do
               , ppCurrent = xmobarColor "#c792ea" "" . wrap "<box type=Bottom width=2 mb=2 color=#c792ea>" "</box>"         -- Current workspace
              -- , ppCurrent = xmobarColor "#98be65" "" . wrap "(" ")"           -- Current workspace
               , ppVisible = xmobarColor "#c792ea" "" . clickable              -- Visible but not current workspace
-              , ppHidden = xmobarColor "#46d9ff" "" . wrap "*" "" . clickable -- Hidden workspaces
+              , ppHidden = xmobarColor "#46d9ff" "" . clickable -- Hidden workspaces
               , ppHiddenNoWindows = xmobarColor "#b3afc2" ""  . clickable     -- Hidden workspaces (no windows)
               , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window
               , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separator character
